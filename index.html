@@ -465,6 +465,12 @@
         .about-text p { font-size: 0.95rem; color: var(--slate); margin-bottom: 10px; }
         .about-text a { color: var(--navy); text-decoration: none; font-weight: 600; }
         .about-text a:hover { text-decoration: underline; }
+        .tcc-brand-stripe { display: flex; height: 6px; width: 100%; }
+        .tcc-brand-stripe > span { flex: 1; display: block; }
+        .tcc-brand-stripe .nv { background: var(--navy); }
+        .tcc-brand-stripe .tn { background: var(--sand); }
+        .tcc-brand-stripe .bg { background: var(--warm); }
+        .tcc-brand-stripe .tl { background: #00788a; }
         footer {
             background: var(--navy);
             color: rgba(255,255,255,0.6);
@@ -489,6 +495,7 @@
     </style>
 </head>
 <body>
+<div class="tcc-brand-stripe" aria-hidden="true"><span class="nv"></span><span class="tn"></span><span class="bg"></span><span class="tl"></span></div>
 
 <div class="topbar"><strong>Texas In Action</strong> · A free, open experiential framework for GOVT 2306 · Sibling project of the Civic Action Project</div>
 
@@ -759,6 +766,7 @@
 
 </main>
 
+<div class="tcc-brand-stripe" aria-hidden="true"><span class="nv"></span><span class="tn"></span><span class="bg"></span><span class="tl"></span></div>
 <footer>
   <p><span class="f-star">★</span> Texas In Action · Created by Jared Alan Stewart · Tarrant County College <span class="f-star">★</span></p>
   <p><span id="contact-email"></span> · This work is shared as a free, open educational resource. Adapt it, improve it, and share it forward.</p>
