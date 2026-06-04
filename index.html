@@ -2,6 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- TIA icons -->
+    <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <meta name="theme-color" content="#002b5c">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Texas In Action (TIA) — Experiential Texas Government for Community Colleges</title>
     <meta name="description" content="Texas In Action replaces traditional exams in Texas Government courses with hands-on engagement: commissioners courts, hidden districts, property taxes, data centers, and the local governments that shape daily Texan life.">
@@ -412,10 +418,29 @@
         }
         @media (max-width: 760px) {
             .sibling { grid-template-columns: 1fr; text-align: center; }
+            .about-card { flex-direction: column; align-items: center; text-align: center; }
             .cap-logo-svg { margin: 0 auto; }
             .sib-rotator { justify-content: center; }
             .sibling .sib-pitch { margin-left: auto; margin-right: auto; }
         }
+        .about-card {
+            background: white; border: 1px solid var(--sand); border-radius: 6px;
+            padding: 36px; display: flex; gap: 28px; align-items: flex-start;
+            text-align: left;
+        }
+        .about-avatar {
+            width: 180px; min-width: 180px; height: 225px;
+            border-radius: 10px;
+            object-fit: cover;
+            object-position: center top;
+            border: 3px solid var(--sand);
+            box-shadow: 0 3px 12px rgba(0,43,92,0.18);
+        }
+        .about-text h3 { font-family: 'EB Garamond', serif; font-size: 1.2rem; color: var(--navy); margin-bottom: 4px; }
+        .about-text .title { font-size: 0.9rem; color: var(--amber); font-weight: 600; margin-bottom: 12px; }
+        .about-text p { font-size: 0.95rem; color: var(--slate); margin-bottom: 10px; }
+        .about-text a { color: var(--navy); text-decoration: none; font-weight: 600; }
+        .about-text a:hover { text-decoration: underline; }
         footer {
             background: var(--navy);
             color: rgba(255,255,255,0.6);
