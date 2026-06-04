@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- TIA icons (?v=2 busts browser cache so the new logo shows immediately) -->
+    <link rel="icon" type="image/png" sizes="64x64" href="favicon.png?v=2">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=2">
+    <link rel="manifest" href="manifest.json?v=2">
+    <meta name="theme-color" content="#002b5c">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIA Path to 100 Points - Complete Planner</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #1e293b;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #002b5c 0%, #002b5c 50%, #3d7ab5 100%);
+            color: white;
+            padding: 35px 40px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 40px rgba(30, 58, 95, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .header h1 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 2.4em;
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        
+        /* Instructions */
+        .instructions {
+            background: white;
+            padding: 22px 28px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            border-left: 5px solid #002b5c;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+        
+        .instructions h3 {
+            color: #002b5c;
+            margin-bottom: 12px;
+            font-size: 1.15em;
+        }
+        
+        .instructions ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 8px;
+        }
+        
+        .instructions li {
+            padding-left: 24px;
+            position: relative;
+            font-size: 0.95em;
+            color: #555;
+        }
+        
+        .instructions li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        /* Category Sections */
+        .category-section {
+            background: white;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+        
+        .category-header {
+            padding: 16px 24px;
+            font-weight: 700;
+            font-size: 1.1em;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: filter 0.2s ease;
+        }
+        
+        .category-header:hover {
+            filter: brightness(1.05);
+        }
+        
+        .category-header .toggle-icon {
+            font-size: 1.3em;
+            transition: transform 0.3s ease;
+        }
+        
+        .category-header.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+        
+        .category-high .category-header {
+            background: linear-gradient(135deg, #98002e 0%, #98002e 100%);
+        }
+        
+        .category-medium .category-header {
+            background: linear-gradient(135deg, #d68910 0%, #f39c12 100%);
+        }
+        
+        .category-quick .category-header {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        }
+        
+        .category-content {
+            padding: 18px;
+            transition: max-height 0.3s ease;
+        }
+        
+        .category-content.collapsed {
+            display: none;
+        }
+        
+        /* Assignment Items */
+        .assignment-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            transition: all 0.25s ease;
+        }
+        
+        .assignment-item:hover {
+            border-color: #002b5c;
+            background: #fff;
+            transform: translateX(4px);
+        }
+        
+        .assignment-item.selected {
+            background: linear-gradient(135deg, #e8f4f8 0%, #d4edda 100%);
+            border-color: #27ae60;
+        }
+        
+        .assignment-checkbox {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            accent-color: #27ae60;
+            flex-shrink: 0;
+        }
+        
+        .assignment-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .assignment-name {
+            font-weight: 600;
+            font-size: 0.98em;
+            color: #1e293b;
+            cursor: pointer;
+        }
+        
+        .assignment-desc {
+            font-size: 0.82em;
+            color: #6c757d;
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .points-container {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        
+        .points-input {
+            width: 60px;
+            padding: 8px 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.95em;
+            font-weight: 600;
+            font-family: inherit;
+            transition: border-color 0.2s ease;
+        }
+        
+        .points-input:focus {
+            outline: none;
+            border-color: #002b5c;
+        }
+        
+        .points-label {
+            font-size: 0.85em;
+            color: #6c757d;
+        }
+        
+        /* Sticky Summary Panel */
+        .summary-panel {
+            position: sticky;
+            top: 20px;
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.12);
+            margin-bottom: 25px;
+        }
+        
+        .summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .total-display {
+            text-align: center;
+        }
+        
+        .total-label {
+            font-size: 0.95em;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+        
+        .total-points {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 3.5em;
+            font-weight: 700;
+            line-height: 1;
+            transition: color 0.3s ease;
+        }
+        
+        .total-points.under { color: #002b5c; }
+        .total-points.exact { color: #27ae60; }
+        .total-points.over { color: #e67e22; }
+        
+        .goal-display {
+            text-align: right;
+        }
+        
+        .goal-label {
+            font-size: 0.85em;
+            color: #6c757d;
+        }
+        
+        .goal-value {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        
+        .progress-section {
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 14px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.4s ease, background 0.3s ease;
+            background: linear-gradient(90deg, #002b5c, #3d7ab5);
+        }
+        
+        .progress-fill.exact {
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+        }
+        
+        .progress-fill.over {
+            background: linear-gradient(90deg, #e67e22, #f39c12);
+        }
+        
+        .progress-text {
+            font-size: 0.9em;
+            color: #6c757d;
+            text-align: center;
+        }
+        
+        /* Requirements Check */
+        .requirements-check {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .req-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid transparent;
+        }
+        
+        .req-item.met {
+            background: #d4edda;
+            border-color: #27ae60;
+        }
+        
+        .req-item.unmet {
+            background: #fff3cd;
+            border-color: #f39c12;
+        }
+        
+        .req-icon {
+            font-size: 1.3em;
+        }
+        
+        .req-text {
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        
+        /* Message Box */
+        .message {
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: 0.95em;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .message.success {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+            border: 2px solid #27ae60;
+        }
+        
+        .message.warning {
+            background: linear-gradient(135deg, #fff3cd, #ffeeba);
+            color: #856404;
+            border: 2px solid #f39c12;
+        }
+        
+        .message.info {
+            background: linear-gradient(135deg, #cce5ff, #b8daff);
+            color: #004085;
+            border: 2px solid #002b5c;
+        }
+        
+        /* Buttons */
+        .button-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9em;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .btn-reset {
+            background: linear-gradient(135deg, #98002e, #98002e);
+            color: white;
+        }
+        
+        .btn-save {
+            background: linear-gradient(135deg, #002b5c, #002b5c);
+            color: white;
+        }
+        
+        .btn-load {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            color: white;
+        }
+        
+        .btn-suggest {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+        }
+        
+        /* Plan submission form */
+        .submit-callout {
+            background: linear-gradient(135deg, #9b1c1f, #005f6e);
+            color: #ffffff;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,43,92,0.18);
+            overflow: hidden;
+        }
+        .submit-callout-stars {
+            text-align: center;
+            color: #dac792;
+            font-size: 0.9em;
+            letter-spacing: 0.35em;
+            line-height: 1;
+            padding: 9px 0;
+            user-select: none;
+        }
+        .submit-callout-body {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 4px 26px 6px;
+        }
+        .submit-callout-icon {
+            font-size: 2.2em;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .submit-callout-text {
+            font-size: 0.97em;
+            line-height: 1.5;
+        }
+        .submit-callout-text strong { color: #ffffff; }
+        .submit-callout-text em {
+            font-style: normal;
+            font-weight: 600;
+            background: rgba(255,255,255,0.18);
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+        .plan-form-section {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+        .plan-form-section h3 {
+            color: #002b5c;
+            margin-bottom: 6px;
+        }
+        .plan-form-section .form-intro {
+            color: #555;
+            font-size: 0.92em;
+            margin-bottom: 18px;
+        }
+        .plan-field { margin-bottom: 16px; }
+        .plan-field label {
+            display: block;
+            font-weight: 600;
+            color: #002b5c;
+            margin-bottom: 6px;
+            font-size: 0.95em;
+        }
+        .plan-field input[type="text"],
+        .plan-field textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1.5px solid #d4dde2;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95em;
+            resize: vertical;
+        }
+        .plan-field input[type="text"]:focus,
+        .plan-field textarea:focus {
+            outline: none;
+            border-color: #9b1c1f;
+        }
+        .plan-field textarea { min-height: 64px; }
+        .btn-pdf {
+            background: linear-gradient(135deg, #9b1c1f, #005f6e);
+            color: white;
+            width: 100%;
+            margin-top: 8px;
+            padding: 14px 20px;
+            font-size: 1em;
+        }
+        .pdf-note {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .pdf-warning {
+            background: #fbe9ee;
+            border-left: 4px solid #98002e;
+            color: #6e0020;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            margin-top: 12px;
+            display: none;
+        }
+        /* Tools Section */
+        .tools-section {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+        
+        .tools-section h3 {
+            color: #002b5c;
+            margin-bottom: 18px;
+            font-size: 1.15em;
+        }
+        
+        .suggestion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        
+        .suggestion-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        
+        .suggestion-card:hover {
+            border-color: #002b5c;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+        }
+        
+        .suggestion-title {
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+        
+        .suggestion-desc {
+            font-size: 0.85em;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+        
+        .suggestion-points {
+            font-weight: 600;
+            color: #27ae60;
+            font-size: 0.9em;
+        }
+        
+        /* Selection Summary */
+        .selection-summary {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 15px;
+        }
+        
+        .selection-summary h4 {
+            color: #1e293b;
+            margin-bottom: 12px;
+            font-size: 1em;
+        }
+        
+        .selected-list {
+            font-size: 0.9em;
+            color: #495057;
+            line-height: 1.6;
+        }
+        
+        .selected-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin: 3px;
+            border: 1px solid #dee2e6;
+            font-size: 0.85em;
+        }
+        
+        .selected-item .pts {
+            color: #27ae60;
+            font-weight: 600;
+        }
+        
+        /* Two column layout for larger screens */
+        @media (min-width: 900px) {
+            .main-content {
+                display: grid;
+                grid-template-columns: 1fr 340px;
+                gap: 25px;
+                align-items: start;
+            }
+            
+            .left-column {
+                order: 1;
+            }
+            
+            .right-column {
+                order: 2;
+            }
+        }
+        
+        /* Mobile adjustments */
+        @media (max-width: 600px) {
+            .header {
+                padding: 25px 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .assignment-item {
+                flex-wrap: wrap;
+            }
+            
+            .assignment-info {
+                width: calc(100% - 40px);
+            }
+            
+            .points-container {
+                margin-left: 34px;
+            }
+            
+            .requirements-check {
+                grid-template-columns: 1fr;
+            }
+            
+            .total-points {
+                font-size: 2.8em;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .btn, .tools-section {
+                display: none;
+            }
+            
+            .summary-panel {
+                position: static;
+                box-shadow: none;
+                border: 2px solid #000;
+            }
+        }
+            .tcc-brand-stripe{display:flex;height:6px;width:100%;}
+        .tcc-brand-stripe>span{flex:1;display:block;}
+        .tcc-brand-stripe .nv{background:#002b5c;}
+        .tcc-brand-stripe .tn{background:#dac792;}
+        .tcc-brand-stripe .bg{background:#98002e;}
+        .tcc-brand-stripe .tl{background:#9b1c1f;}
+        .tcc-brand-footer{background:#002b5c;color:rgba(255,255,255,0.85);text-align:center;padding:20px 16px 24px;font-family:'Inter',sans-serif;font-size:13px;line-height:1.6;}
+        .tcc-brand-footer .tagline{color:#fff;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;font-size:11px;}
+        .tcc-brand-footer .eeoc{margin-top:11px;padding-top:9px;border-top:1px solid rgba(255,255,255,0.2);font-size:10px;font-style:italic;color:rgba(255,255,255,0.7);max-width:720px;margin-left:auto;margin-right:auto;line-height:1.5;}
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+<div class="tcc-brand-stripe" aria-hidden="true"><span class="nv"></span><span class="tn"></span><span class="bg"></span><span class="tl"></span></div>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 TIA Path to 100 Points</h1>
+            <p>Plan your Texas In Action activities to reach your goal!</p>
+        </div>
+        
+        <!-- Customization Notice -->
+        <div style="background: linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%); border: 2px solid #f0c040; border-left: 6px solid #e6a817; border-radius: 14px; padding: 18px 24px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.06);">
+            <div style="display: flex; align-items: flex-start; gap: 12px;">
+                <span style="font-size: 1.5em; line-height: 1;">⚠️</span>
+                <div>
+                    <strong style="color: #7c6200; font-size: 1.02em;">Your instructor may not use all 39 activities.</strong>
+                    <p style="color: #8a7200; font-size: 0.92em; margin: 4px 0 0 0; line-height: 1.5;">
+                        The TIA is customizable — your professor chooses which activities to offer and may adjust point values. 
+                        <strong>Always check your Canvas (or LMS) course for the specific assignments available in your section.</strong> 
+                        Use this planner as a starting point, then match it to what your instructor has assigned.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>📋 How to Use This Planner</h3>
+            <ul>
+                <li>Check your Canvas/LMS first to see which activities your instructor offers</li>
+                <li>Select activities you plan to complete</li>
+                <li>Edit point values if your instructor uses different amounts</li>
+                <li>You must complete activities from at least 2 categories</li>
+                <li>Use suggested paths for quick planning ideas</li>
+                <li><strong>Scroll to the bottom</strong> to answer a few planning questions and generate your <strong>"My TIA Plan"</strong> PDF</li>
+            </ul>
+        </div>
+
+        <div class="submit-callout">
+            <div class="submit-callout-stars">★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★</div>
+            <div class="submit-callout-body">
+                <div class="submit-callout-icon">📄</div>
+                <div class="submit-callout-text">
+                    <strong>This planner produces an assignment you turn in.</strong>
+                    After you select your activities, scroll to the bottom of this page,
+                    answer the planning questions, and click <em>Generate My TIA Plan (PDF)</em>.
+                    Submit that PDF on Canvas when and where your instructor directs you.
+                </div>
+            </div>
+            <div class="submit-callout-stars">★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★</div>
+        </div>
+        
+        <div class="main-content">
+            <div class="left-column">
+                <!-- Higher Effort Section -->
+                <div class="category-section category-high">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>🔴 Higher Effort Activities (20-30 points each) — 14 Assignments</span>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="category-content" id="high-content"></div>
+                </div>
+                
+                <!-- Medium Effort Section -->
+                <div class="category-section category-medium">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>🟡 Medium Effort Activities (10-15 points each) — 14 Assignments</span>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="category-content" id="medium-content"></div>
+                </div>
+                
+                <!-- Quick Engagement Section -->
+                <div class="category-section category-quick">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>🟢 Quick Engagement Activities (5-8 points each) — 11 Assignments</span>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="category-content" id="quick-content"></div>
+                </div>
+                
+                <!-- Suggested Paths -->
+                <div class="tools-section">
+                    <h3>💡 Suggested Paths to 100 Points</h3>
+                    <div class="suggestion-grid">
+                        <div class="suggestion-card" onclick="applySuggestion('balanced')">
+                            <div class="suggestion-title">Balanced Mix</div>
+                            <div class="suggestion-desc">A variety of activities across all categories</div>
+                            <div class="suggestion-points">= 100 points</div>
+                        </div>
+                        <div class="suggestion-card" onclick="applySuggestion('higheffort')">
+                            <div class="suggestion-title">Deep Dive</div>
+                            <div class="suggestion-desc">Focus on fewer, higher-effort activities</div>
+                            <div class="suggestion-points">= 100 points</div>
+                        </div>
+                        <div class="suggestion-card" onclick="applySuggestion('manysmall')">
+                            <div class="suggestion-title">Steady Progress</div>
+                            <div class="suggestion-desc">Many smaller activities spread over time</div>
+                            <div class="suggestion-points">= 100 points</div>
+                        </div>
+                        <div class="suggestion-card" onclick="applySuggestion('video')">
+                            <div class="suggestion-title">Video Creator</div>
+                            <div class="suggestion-desc">Perfect if you enjoy making videos</div>
+                            <div class="suggestion-points">= 100 points</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.85em; color: #888; margin-top: 14px; font-style: italic; text-align: center;">
+                        These paths assume all 39 activities are available. Your instructor may offer a different selection — adjust your plan accordingly.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="right-column">
+                <div class="summary-panel">
+                    <div class="summary-header">
+                        <div class="total-display">
+                            <div class="total-label">Your Total</div>
+                            <div class="total-points under" id="totalPoints">0</div>
+                        </div>
+                        <div class="goal-display">
+                            <div class="goal-label">Goal</div>
+                            <div class="goal-value">100 pts</div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-section">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">Select activities to begin</div>
+                    </div>
+                    
+                    <div class="requirements-check">
+                        <div class="req-item unmet" id="reqPoints">
+                            <span class="req-icon">📊</span>
+                            <span class="req-text">Need 100 points</span>
+                        </div>
+                        <div class="req-item unmet" id="reqCategories">
+                            <span class="req-icon">📁</span>
+                            <span class="req-text">Need 2 categories</span>
+                        </div>
+                    </div>
+                    
+                    <div class="message info" id="message">
+                        Select activities to reach 100 points from at least 2 categories.
+                    </div>
+                    
+                    <div class="button-row">
+                        <button class="btn btn-save" onclick="savePlan()">💾 Save</button>
+                        <button class="btn btn-load" onclick="loadPlan()">📂 Load</button>
+                        <button class="btn btn-reset" onclick="resetAll()">🔄 Reset</button>
+                    </div>
+                    
+                    <div class="selection-summary" id="selectionSummary" style="display: none;">
+                        <h4>Your Selected Activities:</h4>
+                        <div class="selected-list" id="selectedList"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="plan-form-section">
+            <h3>📝 Generate Your TIA Plan</h3>
+            <p class="form-intro">
+                Once you've selected activities totaling 100 points from at least two categories,
+                fill in the questions below and generate your plan as a PDF. <strong>Submit the PDF
+                on Canvas when and where your instructor directs you.</strong>
+            </p>
+
+            <div class="plan-field">
+                <label for="studentName">Your Full Name</label>
+                <input type="text" id="studentName" placeholder="First and last name, as it appears on your roster">
+            </div>
+
+            <div class="plan-field">
+                <label for="q1">1. When is the final deadline for submitting all activities?</label>
+                <input type="text" id="q1" placeholder="Check your syllabus or Canvas — e.g., 'End of Week 7, March 6'">
+            </div>
+
+            <div class="plan-field">
+                <label for="q2">2. Based on your schedule this term, which checkpoint might be most challenging for you to meet?</label>
+                <textarea id="q2" placeholder="Which checkpoint, and why?"></textarea>
+            </div>
+
+            <div class="plan-field">
+                <label for="q3">3. What resources or support would help you succeed in this project?</label>
+                <textarea id="q3" placeholder="Office hours, the writing center, the media lab, transportation, etc."></textarea>
+            </div>
+
+            <div class="plan-field">
+                <label for="q4">4. How do you think this project will connect to your major or career interests?</label>
+                <textarea id="q4"></textarea>
+            </div>
+
+            <div class="plan-field">
+                <label for="q5">5. Which government agencies or services are you most interested in learning more about through this project?</label>
+                <textarea id="q5"></textarea>
+            </div>
+
+            <div class="plan-field">
+                <label for="q6">6. What do you hope to gain from this project beyond course credit?</label>
+                <textarea id="q6"></textarea>
+            </div>
+
+            <button class="btn btn-pdf" onclick="generatePlanPDF()">📄 Generate My TIA Plan (PDF)</button>
+            <div class="pdf-warning" id="pdfWarning"></div>
+            <p class="pdf-note">
+                Your browser will download a PDF. Review it, then submit it on Canvas as your instructor directs.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Complete assignment database with all 39 assignments (29 original + 10 safety-focused)
+        const assignments = {
+            hidden: {"name": "Hidden Districts Investigation", "category": "high", "defaultPoints": 30, "description": "Texas has more than 3,000 special purpose districts — invisible governments that can tax you, charge you…"},
+            commcourt: {"name": "Commissioners Court Field Study", "category": "high", "defaultPoints": 25, "description": "Despite the name, a commissioners court is not a court. It is the governing body of every one of Texas's 254…"},
+            datacenter: {"name": "The Data Center Reckoning", "category": "high", "defaultPoints": 30, "description": "Texas is in the middle of a data center boom — and DFW is its epicenter. These facilities consume enormous…"},
+            comment: {"name": "Public Comment in Texas", "category": "high", "defaultPoints": 25, "description": "Texas law guarantees your right to address local governing bodies. Deliver a public comment — on an issue you…"},
+            schoolfin: {"name": "School Finance: Follow the Money", "category": "high", "defaultPoints": 25, "description": "Texas school finance is famously labyrinthine: a \"basic allotment\" the Legislature raised by only $55 in 2025…"},
+            interviews: {"name": "Local Official Interview Series", "category": "high", "defaultPoints": 25, "description": "Interview two different people who work in or for Texas local government — elected or staff. Justices of the…"},
+            directory: {"name": "Texas Services Directory", "category": "high", "defaultPoints": 30, "description": "Build a practical guide to government services in your community — the document you wish someone had handed…"},
+            preempt: {"name": "Local Control vs. State Preemption", "category": "high", "defaultPoints": 25, "description": "Texas celebrates local control — except when the Legislature doesn't. In 2023 lawmakers passed HB 2127, the…"},
+            tracklaw: {"name": "Track a Texas Law", "category": "high", "defaultPoints": 25, "description": "Pick one bill from a recent Texas legislative session that affects local communities, and follow it from…"},
+            taxautopsy: {"name": "Property Tax Autopsy", "category": "high", "defaultPoints": 25, "description": "Texas has no state income tax, which means property taxes do the heavy lifting — and the system (appraisal…"},
+            disaster: {"name": "Disaster-Ready Community Audit", "category": "high", "defaultPoints": 25, "description": "When disaster hits Texas — tornado, flood, ice storm, grid emergency — a specific local machinery activates:…"},
+            mythvideo: {"name": "Texas Myth Busting Video", "category": "high", "defaultPoints": 20, "description": "Texans believe a lot of things about Texas government that aren't true: *\"Texas can legally secede.\" \"The…"},
+            fivegov: {"name": "Find Your Five Governments", "category": "medium", "defaultPoints": 15, "description": "A photo scavenger hunt with a thesis: at least five distinct governments touch your daily life, and you're…"},
+            fixstreet: {"name": "Fix My Street", "category": "medium", "defaultPoints": 12, "description": "The pothole on your street, the streetlight that's been out for months, the sidewalk that ends in rubble, the…"},
+            jpcourt: {"name": "Courtroom Texas: JP or Municipal Court Observation", "category": "medium", "defaultPoints": 15, "description": "Forget Law & Order — the courts most Texans experience are justice of the peace courts (small claims up to…"},
+            protest: {"name": "Appraisal Protest Exercise", "category": "medium", "defaultPoints": 12, "description": "⚠️ THIS IS AN EXERCISE — DO NOT FILE ANYTHING. You will prepare a complete, hearing-ready protest packet, but…"},
+            ballot: {"name": "Local Ballot Breakdown", "category": "medium", "defaultPoints": 12, "description": "Texas ballots are marathons — and the most consequential races are often the ones nobody researches: school…"},
+            budget: {"name": "County Budget Explorer", "category": "medium", "defaultPoints": 12, "description": "Your county's budget is a moral document with line items. Explore your county's current adopted budget and…"},
+            ercot: {"name": "ERCOT & You", "category": "medium", "defaultPoints": 12, "description": "Texas runs its own electric grid (ERCOT) precisely to avoid federal regulation — a choice with enormous…"},
+            uri: {"name": "The Week the Heat Went Out: Winter Storm Uri", "category": "medium", "defaultPoints": 15, "description": "In February 2021, Winter Storm Uri — a once-in-a-generation arctic freeze, not a hurricane and not a heat…"},
+            water: {"name": "Who Owns the Water?", "category": "medium", "defaultPoints": 12, "description": "Texas is growing faster than its water supply, and the governance is bizarre: surface water belongs to the…"},
+            journal1: {"name": "Texas News Connection Journal #1", "category": "medium", "defaultPoints": 10, "description": "Connect one Texas state or local government news story from the last 30 days to course concepts and your own…"},
+            journal2: {"name": "Texas News Connection Journal #2", "category": "medium", "defaultPoints": 10, "description": "Connect one Texas state or local government news story from the last 30 days to course concepts and your own…"},
+            clip1: {"name": "Texan & Their Government Interview Clip #1", "category": "medium", "defaultPoints": 10, "description": "A 2–3 minute recorded conversation with any Texan (not a government employee — a regular person) about their…"},
+            clip2: {"name": "Texan & Their Government Interview Clip #2", "category": "medium", "defaultPoints": 10, "description": "A 2–3 minute recorded conversation with any Texan (not a government employee — a regular person) about their…"},
+            reflect1: {"name": "Texas Impact Reflection #1", "category": "quick", "defaultPoints": 5, "description": "Spot one way Texas state or local government touched your life this week — the road you drove, the inspection…"},
+            reflect2: {"name": "Texas Impact Reflection #2", "category": "quick", "defaultPoints": 5, "description": "Spot one way Texas state or local government touched your life this week — the road you drove, the inspection…"},
+            reflect3: {"name": "Texas Impact Reflection #3", "category": "quick", "defaultPoints": 5, "description": "Spot one way Texas state or local government touched your life this week — the road you drove, the inspection…"},
+            reflect4: {"name": "Texas Impact Reflection #4", "category": "quick", "defaultPoints": 5, "description": "Spot one way Texas state or local government touched your life this week — the road you drove, the inspection…"},
+            reflect5: {"name": "Texas Impact Reflection #5", "category": "quick", "defaultPoints": 5, "description": "Spot one way Texas state or local government touched your life this week — the road you drove, the inspection…"},
+            video1: {"name": "60-Second Texas Government #1", "category": "quick", "defaultPoints": 8, "description": "A 60-second video explaining one specific way Texas state or local government affected your week — with you…"},
+            video2: {"name": "60-Second Texas Government #2", "category": "quick", "defaultPoints": 8, "description": "A 60-second video explaining one specific way Texas state or local government affected your week — with you…"},
+            video3: {"name": "60-Second Texas Government #3", "category": "quick", "defaultPoints": 8, "description": "A 60-second video explaining one specific way Texas state or local government affected your week — with you…"},
+            video4: {"name": "60-Second Texas Government #4", "category": "quick", "defaultPoints": 8, "description": "A 60-second video explaining one specific way Texas state or local government affected your week — with you…"},
+            officials: {"name": "Meet Your Officials", "category": "quick", "defaultPoints": 6, "description": "Build your complete personal representation roster, from constable to governor, using your actual address."},
+            oddity: {"name": "Texas Constitution Oddity Spotlight", "category": "quick", "defaultPoints": 6, "description": "The Texas Constitution of 1876 has been amended over 500 times and contains genuine oddities. Find one…"},
+            sign: {"name": "Sign of Government", "category": "quick", "defaultPoints": 5, "description": "One photo. One piece of visible public infrastructure or signage — water tower, road sign, fire station,…"},
+            ready60: {"name": "Emergency Ready in 60", "category": "quick", "defaultPoints": 8, "description": "Three rapid actions that make you measurably more disaster-ready, documented: (1) register for your…"},
+            agenda: {"name": "Agenda Decoder", "category": "quick", "defaultPoints": 6, "description": "Local government agendas are public, posted 72 hours ahead under the Texas Open Meetings Act — and written in…"}
+        };
+        
+        // Suggested paths
+        const suggestedPaths = {
+            "balanced": [
+                        "commcourt",
+                        "taxautopsy",
+                        "fixstreet",
+                        "journal1",
+                        "reflect1",
+                        "reflect2",
+                        "video1",
+                        "video2",
+                        "officials"
+            ],
+            "higheffort": [
+                        "hidden",
+                        "datacenter",
+                        "directory",
+                        "reflect1",
+                        "reflect2"
+            ],
+            "manysmall": [
+                        "fivegov",
+                        "jpcourt",
+                        "journal1",
+                        "journal2",
+                        "clip1",
+                        "reflect1",
+                        "reflect2",
+                        "reflect3",
+                        "video1",
+                        "video2",
+                        "officials",
+                        "agenda"
+            ],
+            "safety": [
+                        "disaster",
+                        "uri",
+                        "ercot",
+                        "water",
+                        "ready60",
+                        "reflect1",
+                        "reflect2",
+                        "video1",
+                        "journal1"
+            ]
+        };
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            buildAssignmentLists();
+            loadFromStorage();
+            calculateTotal();
+        });
+        
+        function buildAssignmentLists() {
+            const highContent = document.getElementById('high-content');
+            const mediumContent = document.getElementById('medium-content');
+            const quickContent = document.getElementById('quick-content');
+            
+            Object.entries(assignments).forEach(([id, assignment]) => {
+                const item = createAssignmentItem(id, assignment);
+                
+                if (assignment.category === 'high') {
+                    highContent.appendChild(item);
+                } else if (assignment.category === 'medium') {
+                    mediumContent.appendChild(item);
+                } else {
+                    quickContent.appendChild(item);
+                }
+            });
+        }
+        
+        function createAssignmentItem(id, assignment) {
+            const item = document.createElement('div');
+            item.className = 'assignment-item';
+            item.id = `item-${id}`;
+            
+            item.innerHTML = `
+                <input type="checkbox" class="assignment-checkbox" id="check-${id}" 
+                       data-id="${id}" onchange="handleCheckboxChange(this)">
+                <div class="assignment-info">
+                    <label class="assignment-name" for="check-${id}">${assignment.name}</label>
+                    <div class="assignment-desc">${assignment.description}</div>
+                </div>
+                <div class="points-container">
+                    <input type="number" class="points-input" id="points-${id}" 
+                           value="${assignment.defaultPoints}" min="0" max="100"
+                           data-id="${id}" data-default="${assignment.defaultPoints}"
+                           onchange="handlePointsChange(this)">
+                    <span class="points-label">pts</span>
+                </div>
+            `;
+            
+            return item;
+        }
+        
+        function handleCheckboxChange(checkbox) {
+            const id = checkbox.dataset.id;
+            const item = document.getElementById(`item-${id}`);
+            
+            if (checkbox.checked) {
+                item.classList.add('selected');
+            } else {
+                item.classList.remove('selected');
+            }
+            
+            calculateTotal();
+            saveToStorage();
+        }
+        
+        function handlePointsChange(input) {
+            calculateTotal();
+            saveToStorage();
+        }
+        
+        function calculateTotal() {
+            let total = 0;
+            const categories = new Set();
+            const selected = [];
+            
+            Object.keys(assignments).forEach(id => {
+                const checkbox = document.getElementById(`check-${id}`);
+                const pointsInput = document.getElementById(`points-${id}`);
+                
+                if (checkbox && checkbox.checked) {
+                    const points = parseInt(pointsInput.value) || 0;
+                    total += points;
+                    categories.add(assignments[id].category);
+                    selected.push({ id, name: assignments[id].name, points });
+                }
+            });
+            
+            updateDisplay(total, categories.size, selected);
+        }
+        
+        function updateDisplay(total, categoryCount, selected) {
+            const totalElement = document.getElementById('totalPoints');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const messageElement = document.getElementById('message');
+            const reqPoints = document.getElementById('reqPoints');
+            const reqCategories = document.getElementById('reqCategories');
+            const selectionSummary = document.getElementById('selectionSummary');
+            const selectedList = document.getElementById('selectedList');
+            
+            // Update total
+            totalElement.textContent = total;
+            
+            // Update total color class
+            totalElement.className = 'total-points';
+            progressFill.className = 'progress-fill';
+            
+            if (total >= 100) {
+                if (total === 100) {
+                    totalElement.classList.add('exact');
+                    progressFill.classList.add('exact');
+                } else {
+                    totalElement.classList.add('over');
+                    progressFill.classList.add('over');
+                }
+            } else {
+                totalElement.classList.add('under');
+            }
+            
+            // Update progress bar
+            const percentage = Math.min((total / 100) * 100, 100);
+            progressFill.style.width = percentage + '%';
+            
+            // Update progress text
+            if (total === 0) {
+                progressText.textContent = 'Select activities to begin';
+            } else if (total < 100) {
+                progressText.textContent = `${100 - total} more points needed`;
+            } else if (total === 100) {
+                progressText.textContent = 'Goal reached! 🎉';
+            } else {
+                progressText.textContent = `${total - 100} points over goal`;
+            }
+            
+            // Update requirements
+            reqPoints.className = 'req-item ' + (total >= 100 ? 'met' : 'unmet');
+            reqPoints.querySelector('.req-icon').textContent = total >= 100 ? '✅' : '📊';
+            reqPoints.querySelector('.req-text').textContent = total >= 100 ? '100+ points ✓' : `Need ${100 - total} more points`;
+            
+            reqCategories.className = 'req-item ' + (categoryCount >= 2 ? 'met' : 'unmet');
+            reqCategories.querySelector('.req-icon').textContent = categoryCount >= 2 ? '✅' : '📁';
+            reqCategories.querySelector('.req-text').textContent = categoryCount >= 2 ? `${categoryCount} categories ✓` : `Need ${2 - categoryCount} more category`;
+            
+            // Update message
+            if (total >= 100 && categoryCount >= 2) {
+                messageElement.className = 'message success';
+                messageElement.textContent = '🎉 Great plan! You\'ve met the TIA requirements. Confirm these activities are available in your course!';
+            } else if (total >= 100 && categoryCount < 2) {
+                messageElement.className = 'message warning';
+                messageElement.textContent = '⚠️ You have enough points, but need activities from at least 2 categories.';
+            } else if (total > 0) {
+                messageElement.className = 'message info';
+                messageElement.textContent = `Keep going! Select ${100 - total} more points${categoryCount < 2 ? ' from at least 2 categories' : ''}.`;
+            } else {
+                messageElement.className = 'message info';
+                messageElement.textContent = 'Select activities to reach 100 points from at least 2 categories.';
+            }
+            
+            // Update selection summary
+            if (selected.length > 0) {
+                selectionSummary.style.display = 'block';
+                selectedList.innerHTML = selected.map(s => 
+                    `<span class="selected-item">${s.name} <span class="pts">(${s.points})</span></span>`
+                ).join('');
+            } else {
+                selectionSummary.style.display = 'none';
+            }
+        }
+        
+        function toggleCategory(header) {
+            header.classList.toggle('collapsed');
+            const content = header.nextElementSibling;
+            content.classList.toggle('collapsed');
+        }
+        
+        function applySuggestion(pathName) {
+            // Clear current selections
+            Object.keys(assignments).forEach(id => {
+                const checkbox = document.getElementById(`check-${id}`);
+                const item = document.getElementById(`item-${id}`);
+                if (checkbox) {
+                    checkbox.checked = false;
+                    item.classList.remove('selected');
+                }
+            });
+            
+            // Apply suggested path
+            const path = suggestedPaths[pathName];
+            if (path) {
+                path.forEach(id => {
+                    const checkbox = document.getElementById(`check-${id}`);
+                    const item = document.getElementById(`item-${id}`);
+                    if (checkbox) {
+                        checkbox.checked = true;
+                        item.classList.add('selected');
+                    }
+                });
+            }
+            
+            calculateTotal();
+            saveToStorage();
+            
+            // Scroll to top of summary
+            document.querySelector('.summary-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        function resetAll() {
+            if (confirm('Are you sure you want to reset all selections?')) {
+                Object.keys(assignments).forEach(id => {
+                    const checkbox = document.getElementById(`check-${id}`);
+                    const pointsInput = document.getElementById(`points-${id}`);
+                    const item = document.getElementById(`item-${id}`);
+                    
+                    if (checkbox) checkbox.checked = false;
+                    if (pointsInput) pointsInput.value = assignments[id].defaultPoints;
+                    if (item) item.classList.remove('selected');
+                });
+                
+                calculateTotal();
+                localStorage.removeItem('capPlannerData');
+            }
+        }
+        
+        function savePlan() {
+            saveToStorage();
+            alert('✅ Your plan has been saved to this browser!\n\nYour selections will be here when you return.\n\nRemember: Check your Canvas course to confirm which activities your instructor has assigned.');
+        }
+        
+        function loadPlan() {
+            const saved = loadFromStorage();
+            if (saved) {
+                alert('📂 Your saved plan has been loaded!');
+            } else {
+                alert('No saved plan found in this browser.');
+            }
+        }
+        
+        function saveToStorage() {
+            const data = {};
+            
+            Object.keys(assignments).forEach(id => {
+                const checkbox = document.getElementById(`check-${id}`);
+                const pointsInput = document.getElementById(`points-${id}`);
+                
+                data[id] = {
+                    checked: checkbox ? checkbox.checked : false,
+                    points: pointsInput ? parseInt(pointsInput.value) : assignments[id].defaultPoints
+                };
+            });
+            
+            localStorage.setItem('capPlannerData', JSON.stringify(data));
+        }
+        
+        function loadFromStorage() {
+            const saved = localStorage.getItem('capPlannerData');
+            
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    
+                    Object.entries(data).forEach(([id, values]) => {
+                        const checkbox = document.getElementById(`check-${id}`);
+                        const pointsInput = document.getElementById(`points-${id}`);
+                        const item = document.getElementById(`item-${id}`);
+                        
+                        if (checkbox && values.checked !== undefined) {
+                            checkbox.checked = values.checked;
+                            if (values.checked && item) {
+                                item.classList.add('selected');
+                            }
+                        }
+                        
+                        if (pointsInput && values.points !== undefined) {
+                            pointsInput.value = values.points;
+                        }
+                    });
+                    
+                    return true;
+                } catch (e) {
+                    console.error('Error loading saved data:', e);
+                    return false;
+                }
+            }
+            
+            return false;
+        }
+
+        // ====================================================================
+        // TIA PLAN PDF GENERATION
+        // Builds a PDF listing the student's name, their selected activities,
+        // a category-requirement indicator, and their answers to the six
+        // planning questions. Uses jsPDF (loaded from CDN).
+        // ====================================================================
+        function getSelectedActivities() {
+            const selected = [];
+            let total = 0;
+            const categories = new Set();
+            Object.keys(assignments).forEach(id => {
+                const checkbox = document.getElementById(`check-${id}`);
+                const pointsInput = document.getElementById(`points-${id}`);
+                if (checkbox && checkbox.checked) {
+                    const points = parseInt(pointsInput.value) || 0;
+                    total += points;
+                    categories.add(assignments[id].category);
+                    selected.push({
+                        name: assignments[id].name,
+                        category: assignments[id].category,
+                        points: points
+                    });
+                }
+            });
+            return { selected, total, categories };
+        }
+
+        const CATEGORY_LABELS = {
+            high: 'Higher Effort',
+            medium: 'Medium Effort',
+            quick: 'Quick Engagement'
+        };
+
+        function generatePlanPDF() {
+            const warning = document.getElementById('pdfWarning');
+            warning.style.display = 'none';
+
+            const name = document.getElementById('studentName').value.trim();
+            const { selected, total, categories } = getSelectedActivities();
+
+            // Validation — collect issues, show them rather than silently producing a bad PDF
+            const issues = [];
+            if (!name) issues.push('Enter your full name.');
+            if (selected.length === 0) issues.push('Select at least one activity above.');
+            if (total < 100) issues.push(`Your selected activities total ${total} points — you need 100.`);
+            if (categories.size < 2) issues.push('Select activities from at least 2 different categories.');
+            if (issues.length > 0) {
+                warning.innerHTML = '<strong>Please fix the following before generating your plan:</strong><ul style="margin:6px 0 0 18px;">'
+                    + issues.map(i => `<li>${i}</li>`).join('') + '</ul>';
+                warning.style.display = 'block';
+                if (warning.scrollIntoView) {
+                    warning.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
+            }
+
+            const q = id => (document.getElementById(id).value.trim() || '(not answered)');
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+            const pageW = doc.internal.pageSize.getWidth();
+            const pageH = doc.internal.pageSize.getHeight();
+            const margin = 56;
+            const contentW = pageW - margin * 2;
+            let y = margin;
+
+            // TCC brand stripe across the top
+            const stripeColors = [[0,43,92],[218,199,146],[152,0,46],[0,120,138]];
+            const stripeW = pageW / 4;
+            stripeColors.forEach((c, i) => {
+                doc.setFillColor(c[0], c[1], c[2]);
+                doc.rect(i * stripeW, 0, stripeW, 6, 'F');
+            });
+
+            // Title
+            y = margin;
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(20);
+            doc.setTextColor(0, 43, 92);
+            doc.text('Texas In Action — My Plan', margin, y);
+            y += 22;
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(10);
+            doc.setTextColor(110, 110, 110);
+            doc.text('Connecting Government Concepts to Your Community', margin, y);
+            y += 26;
+
+            // Student name + date
+            doc.setDrawColor(212, 221, 226);
+            doc.line(margin, y, pageW - margin, y);
+            y += 20;
+            doc.setFontSize(12);
+            doc.setTextColor(30, 41, 59);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Student: ', margin, y);
+            const nameOffset = doc.getTextWidth('Student: ');
+            doc.setFont('helvetica', 'normal');
+            doc.text(name, margin + nameOffset, y);
+            const dateStr = new Date().toLocaleDateString('en-US',
+                { year: 'numeric', month: 'long', day: 'numeric' });
+            doc.setTextColor(110, 110, 110);
+            doc.setFontSize(10);
+            doc.text('Plan created: ' + dateStr, pageW - margin, y, { align: 'right' });
+            y += 28;
+
+            // ----- Planned Activities -----
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(13);
+            doc.setTextColor(0, 43, 92);
+            doc.text('Planned Activities', margin, y);
+            y += 8;
+            doc.setDrawColor(0, 120, 138);
+            doc.setLineWidth(1.5);
+            doc.line(margin, y, margin + 120, y);
+            doc.setLineWidth(1);
+            y += 18;
+
+            doc.setFontSize(10);
+            selected.forEach(a => {
+                if (y > pageH - margin - 40) { doc.addPage(); y = margin; }
+                doc.setFont('helvetica', 'normal');
+                doc.setTextColor(30, 41, 59);
+                const label = `${a.name}  (${CATEGORY_LABELS[a.category]})`;
+                doc.text(label, margin + 6, y);
+                doc.setFont('helvetica', 'bold');
+                doc.text(`${a.points} pts`, pageW - margin, y, { align: 'right' });
+                y += 16;
+            });
+            y += 4;
+            doc.setDrawColor(212, 221, 226);
+            doc.line(margin, y, pageW - margin, y);
+            y += 16;
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(11);
+            doc.setTextColor(0, 43, 92);
+            doc.text('Total Planned Points:', margin + 6, y);
+            doc.text(`${total}`, pageW - margin, y, { align: 'right' });
+            y += 24;
+
+            // ----- Requirement check -----
+            const meetsCategories = categories.size >= 2;
+            const catList = Array.from(categories).map(c => CATEGORY_LABELS[c]).join(', ');
+            doc.setFillColor(meetsCategories ? 232 : 251,
+                             meetsCategories ? 245 : 233,
+                             meetsCategories ? 233 : 238);
+            const boxH = 44;
+            doc.roundedRect(margin, y, contentW, boxH, 4, 4, 'F');
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(10.5);
+            doc.setTextColor(meetsCategories ? 27 : 110, meetsCategories ? 94 : 0, meetsCategories ? 32 : 32);
+            const checkLabel = meetsCategories
+                ? 'Category requirement: MET'
+                : 'Category requirement: NOT MET';
+            doc.text(checkLabel, margin + 12, y + 18);
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(9);
+            const checkDetail = meetsCategories
+                ? `This plan includes activities from ${categories.size} categories (${catList}).`
+                : `This plan only includes ${categories.size} category. At least 2 are required.`;
+            doc.text(checkDetail, margin + 12, y + 33);
+            y += boxH + 26;
+
+            // ----- Planning Questions -----
+            if (y > pageH - margin - 80) { doc.addPage(); y = margin; }
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(13);
+            doc.setTextColor(0, 43, 92);
+            doc.text('Planning Reflection', margin, y);
+            y += 8;
+            doc.setDrawColor(0, 120, 138);
+            doc.setLineWidth(1.5);
+            doc.line(margin, y, margin + 120, y);
+            doc.setLineWidth(1);
+            y += 18;
+
+            const questions = [
+                ['When is the final deadline for submitting all activities?', q('q1')],
+                ['Based on your schedule this term, which checkpoint might be most challenging for you to meet?', q('q2')],
+                ['What resources or support would help you succeed in this project?', q('q3')],
+                ['How do you think this project will connect to your major or career interests?', q('q4')],
+                ['Which government agencies or services are you most interested in learning more about?', q('q5')],
+                ['What do you hope to gain from this project beyond course credit?', q('q6')],
+            ];
+
+            questions.forEach((pair, i) => {
+                const qText = `${i + 1}. ${pair[0]}`;
+                const aText = pair[1];
+                const qLines = doc.splitTextToSize(qText, contentW);
+                const aLines = doc.splitTextToSize(aText, contentW - 12);
+                const blockH = qLines.length * 13 + aLines.length * 12 + 14;
+                if (y + blockH > pageH - margin) { doc.addPage(); y = margin; }
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(10);
+                doc.setTextColor(0, 43, 92);
+                doc.text(qLines, margin, y);
+                y += qLines.length * 13 + 3;
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(10);
+                doc.setTextColor(40, 40, 40);
+                doc.text(aLines, margin + 12, y);
+                y += aLines.length * 12 + 14;
+            });
+
+            // Footer on every page
+            const pageCount = doc.internal.getNumberOfPages();
+            for (let p = 1; p <= pageCount; p++) {
+                doc.setPage(p);
+                doc.setFont('helvetica', 'italic');
+                doc.setFontSize(8);
+                doc.setTextColor(140, 140, 140);
+                doc.text('Submit this PDF on Canvas as directed by your instructor.',
+                    margin, pageH - 28);
+                doc.text(`Page ${p} of ${pageCount}`, pageW - margin, pageH - 28, { align: 'right' });
+            }
+
+            const safeName = name.replace(/[^a-zA-Z0-9]+/g, '_');
+            doc.save(`CAP_Plan_${safeName}.pdf`);
+        }
+    </script>
+<div class="tcc-brand-stripe" aria-hidden="true"><span class="nv"></span><span class="tn"></span><span class="bg"></span><span class="tl"></span></div>
+<div class="tcc-brand-footer"><div class="tagline">Tomorrow Starts Here</div><div>Tarrant County College &middot; <a href="https://www.tccd.edu" style="color:#dac792;" target="_blank" rel="noopener">www.tccd.edu</a></div><div class="eeoc">Tarrant County College is an Equal Opportunity Institution that provides educational and employment opportunities on the basis of merit and without discrimination because of race, color, religion, sex, age, national origin, physical or mental disability, sexual orientation, or veteran status.</div></div>
+</body>
+</html>
