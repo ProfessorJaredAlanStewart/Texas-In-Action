@@ -345,36 +345,77 @@
         /* Sibling project band */
         .sibling {
             background: linear-gradient(135deg, var(--navy), #004a63);
-            border-radius: 8px;
-            color: white;
-            padding: 36px 34px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 24px;
-            flex-wrap: wrap;
-            text-align: left;
-        }
-        .sibling h3 { font-family: 'EB Garamond', Georgia, serif; font-size: 1.4rem; margin-bottom: 6px; }
-        .sibling p { color: rgba(255,255,255,0.78); font-size: 0.96rem; max-width: 560px; }
-        .about-card {
-            background: white; border: 1px solid var(--sand); border-radius: 6px;
-            padding: 36px; display: flex; gap: 28px; align-items: flex-start;
-            text-align: left;
-        }
-        .about-avatar {
-            width: 180px; min-width: 180px; height: 225px;
+            border: 1px solid rgba(218,199,146,0.35);
             border-radius: 10px;
-            object-fit: cover;
-            object-position: center top;
-            border: 3px solid var(--sand);
-            box-shadow: 0 3px 12px rgba(0,43,92,0.18);
+            color: white;
+            padding: 34px 38px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 32px;
+            position: relative;
+            overflow: hidden;
+            text-align: left;
         }
-        .about-text h3 { font-family: 'EB Garamond', serif; font-size: 1.2rem; color: var(--navy); margin-bottom: 4px; }
-        .about-text .title { font-size: 0.9rem; color: var(--amber); font-weight: 600; margin-bottom: 12px; }
-        .about-text p { font-size: 0.95rem; color: var(--slate); margin-bottom: 10px; }
-        .about-text a { color: var(--navy); text-decoration: none; font-weight: 600; }
-        .about-text a:hover { text-decoration: underline; }
+        .sibling::after {
+            content: '★';
+            position: absolute;
+            right: -30px; bottom: -60px;
+            font-size: 220px;
+            color: rgba(218,199,146,0.07);
+            line-height: 1;
+            pointer-events: none;
+        }
+        .cap-logo-link { display: block; line-height: 0; }
+        .cap-logo-svg {
+            width: 132px; height: 132px;
+            display: block;
+            transition: transform 0.25s ease;
+        }
+        .cap-logo-link:hover .cap-logo-svg { transform: scale(1.06) rotate(-2deg); }
+        .sibling h3 {
+            font-family: 'EB Garamond', Georgia, serif;
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+        }
+        .sibling h3 .gold { color: var(--gold); }
+        .sibling .sib-pitch { color: rgba(255,255,255,0.82); font-size: 0.96rem; max-width: 560px; margin-bottom: 12px; }
+        .sib-rotator {
+            min-height: 2.6em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            color: var(--gold);
+            font-weight: 500;
+        }
+        .sib-rotator .sib-star { color: var(--sand); flex-shrink: 0; }
+        #sib-fact {
+            opacity: 1;
+            transition: opacity 0.45s ease;
+            font-style: italic;
+        }
+        #sib-fact.fading { opacity: 0; }
+        .btn-cap {
+            background: var(--warm);
+            color: #fff;
+            box-shadow: 0 4px 18px rgba(152,0,46,0.5);
+            white-space: nowrap;
+            position: relative;
+        }
+        .btn-cap .arrow { display: inline-block; transition: transform 0.2s ease; }
+        .btn-cap:hover { background: #b30036; }
+        .btn-cap:hover .arrow { transform: translateX(5px); }
+        @media (prefers-reduced-motion: reduce) {
+            #sib-fact { transition: none; }
+            .cap-logo-svg, .btn-cap .arrow { transition: none; }
+        }
+        @media (max-width: 760px) {
+            .sibling { grid-template-columns: 1fr; text-align: center; }
+            .cap-logo-svg { margin: 0 auto; }
+            .sib-rotator { justify-content: center; }
+            .sibling .sib-pitch { margin-left: auto; margin-right: auto; }
+        }
         footer {
             background: var(--navy);
             color: rgba(255,255,255,0.6);
@@ -588,12 +629,65 @@
 <section>
   <div class="container">
     <div class="sibling">
+      <a class="cap-logo-link" href="https://professorjaredalanstewart.github.io/Civic-Action-Project/" aria-label="Visit the Civic Action Project">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" class="cap-logo-svg" role="img" aria-label="CAP — Civic Action Project logo">
+  <title>CAP — Civic Action Project</title>
+  <defs>
+    <!-- soft lift shadow for the badge -->
+    <filter id="badgeShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="9" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <!-- subtle drop shadow for star + letters -->
+    <filter id="liftShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.40"/>
+    </filter>
+  </defs>
+
+  <!-- ===== Badge: navy field, double frame (dark inner edge + tan band) ===== -->
+  <g filter="url(#badgeShadow)">
+    <rect x="26" y="26" width="548" height="548" rx="78" ry="78" fill="#dac792"/>
+    <rect x="38" y="38" width="524" height="524" rx="68" ry="68" fill="#002b5c"/>
+    <rect x="38" y="38" width="524" height="524" rx="68" ry="68"
+          fill="none" stroke="#0a1f3c" stroke-width="3"/>
+  </g>
+  <!-- thin dark line just inside the tan band -->
+  <rect x="26.5" y="26.5" width="547" height="547" rx="77.5" ry="77.5"
+        fill="none" stroke="#0a1f3c" stroke-width="1.5" opacity="0.55"/>
+
+  <!-- ===== Star: tan fill, teal outline, soft lift ===== -->
+  <path d="M300.00 102.00 L316.29 145.57 L362.77 147.60 L326.36 176.57 L338.79 221.40 L300.00 195.72 L261.21 221.40 L273.64 176.57 L237.23 147.60 L283.71 145.57 Z"
+        fill="#dac792" stroke="#00788a" stroke-width="6" stroke-linejoin="round"
+        filter="url(#liftShadow)"/>
+
+  <!-- ===== CAP wordmark: white serif, teal outline, lift shadow ===== -->
+  <text x="303" y="398"
+        font-family="'EB Garamond', 'Garamond', Georgia, serif"
+        font-size="178" font-weight="700" letter-spacing="22"
+        text-anchor="middle"
+        fill="#ffffff" stroke="#00788a" stroke-width="4.5"
+        paint-order="stroke" stroke-linejoin="round"
+        filter="url(#liftShadow)">CAP</text>
+
+  <!-- ===== Burgundy divider rule ===== -->
+  <rect x="150" y="432" width="300" height="6" rx="3" fill="#98002e"/>
+
+  <!-- ===== Tagline: tan serif, subtle teal outline ===== -->
+  <text x="301" y="492"
+        font-family="'EB Garamond', 'Garamond', Georgia, serif"
+        font-size="31" font-weight="600" letter-spacing="2.4"
+        text-anchor="middle"
+        fill="#dac792" stroke="#00788a" stroke-width="1.3"
+        paint-order="stroke" stroke-linejoin="round">CIVIC ACTION PROJECT</text>
+</svg>
+
+      </a>
       <div>
-        <h3>Teaching Federal Government too?</h3>
-        <p>TIA's sibling project, the <strong>Civic Action Project (CAP)</strong>, brings the same experiential framework
-        to GOVT 2305 — distinct assignments, zero recycled content between courses.</p>
+        <h3>Teaching Federal Government too? Meet the <span class="gold">CAP</span>.</h3>
+        <p class="sib-pitch">TIA's sibling project, the <strong>Civic Action Project</strong>, brings the same experiential framework
+        to GOVT 2305 — 39 distinct federal assignments, zero recycled content between courses.</p>
+        <div class="sib-rotator"><span class="sib-star">★</span><span id="sib-fact">93% of students said CAP helped them understand government better than traditional study.</span></div>
       </div>
-      <a class="btn btn-primary" href="https://professorjaredalanstewart.github.io/Civic-Action-Project/">Visit the CAP →</a>
+      <a class="btn btn-cap" href="https://professorjaredalanstewart.github.io/Civic-Action-Project/">Visit the CAP <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -633,6 +727,30 @@
       a.href = 'mai' + 'lto:' + e; a.textContent = e;
       s.appendChild(a);
       if (s2) { var a2 = a.cloneNode(true); s2.appendChild(a2); }
+    })();
+
+    // CAP evidence rotator for the sibling band
+    (function(){
+      var facts = [
+        "93% of students said CAP helped them understand government better than traditional study.",
+        "\u201CIt\u2019s the first time I\u2019ve ever been able to remember something I\u2019ve learned in school.\u201D \u2014 TCC student",
+        "85% rated their overall CAP experience Good or Excellent.",
+        "\u201CIt took them from a book concept into reality.\u201D \u2014 TCC student",
+        "87% found the Complete/Incomplete rubrics helpful and clear.",
+        "Validated with 75+ community college students at Tarrant County College."
+      ];
+      var el = document.getElementById('sib-fact');
+      if (!el) return;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var i = 0;
+      setInterval(function(){
+        el.classList.add('fading');
+        setTimeout(function(){
+          i = (i + 1) % facts.length;
+          el.textContent = facts[i];
+          el.classList.remove('fading');
+        }, 450);
+      }, 5000);
     })();
   </script>
 </footer>
