@@ -13,28 +13,28 @@
 <meta name="description" content="All 39 Texas In Action assignments with full prompts, How to Get Started guides, and Complete/Incomplete rubrics.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --navy:#1a2744; --ink:#1e293b; --texred:#9b1c1f; --texred-dark:#7a1417;
-  --warm:#92400e; --amber:#d97706; --gold:#fbbf24; --cream:#fefbf4;
-  --sand:#e8e0d0; --rule:#d4cabb; --muted:#6b7280; --green-accent:#15803d; --blue-accent:#1d4ed8;
+  --navy:#002b5c; --ink:#1e293b; --texred:#98002e; --texred-dark:#6e0021;
+  --warm:#92400e; --amber:#d97706; --gold:#fbbf24; --cream:#f7fafb;
+  --sand:#dac792; --rule:#d4cabb; --muted:#6b7280; --green-accent:#15803d; --blue-accent:#1d4ed8;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-size:16.5px}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;font-size:16.5px}
 a{color:var(--blue-accent)}
 .topbar{background:var(--texred-dark);color:rgba(255,255,255,.78);font-size:13px;padding:8px 0;letter-spacing:.04em;text-align:center}
 .topbar a{color:#fff;text-decoration:none;font-weight:600}
 .pagehead{background:linear-gradient(170deg,var(--navy),#2a3a5e);color:#fff;padding:46px 24px 40px;text-align:center}
-.pagehead .wm{font-family:'Libre Baskerville',serif;font-weight:700;font-size:1.05rem;letter-spacing:.05em;color:rgba(255,255,255,.85)}
-.pagehead .wm .in{font-family:'Source Sans 3',sans-serif;font-size:.62em;letter-spacing:.5em;color:var(--gold);margin:0 .35em}
-.pagehead h1{font-family:'Libre Baskerville',serif;font-size:clamp(1.7rem,4.5vw,2.5rem);margin:10px 0 12px}
+.pagehead .wm{font-family:'EB Garamond',Georgia,serif;font-weight:700;font-size:1.05rem;letter-spacing:.05em;color:rgba(255,255,255,.85)}
+.pagehead .wm .in{font-family:'Inter',sans-serif;font-size:.62em;letter-spacing:.5em;color:var(--gold);margin:0 .35em}
+.pagehead h1{font-family:'EB Garamond',Georgia,serif;font-size:clamp(1.7rem,4.5vw,2.5rem);margin:10px 0 12px}
 .pagehead p{color:rgba(255,255,255,.75);max-width:620px;margin:0 auto}
 .container{max-width:880px;margin:0 auto;padding:0 20px}
 .intro{padding:38px 0 6px}
 .intro h1{display:none}
-.intro h2{font-family:'Libre Baskerville',serif;color:var(--navy);font-size:1.3rem;margin:26px 0 8px}
-.intro h3{font-family:'Libre Baskerville',serif;color:var(--texred);font-size:1.05rem;margin:20px 0 6px}
+.intro h2{font-family:'EB Garamond',Georgia,serif;color:var(--navy);font-size:1.3rem;margin:26px 0 8px}
+.intro h3{font-family:'EB Garamond',Georgia,serif;color:var(--texred);font-size:1.05rem;margin:20px 0 6px}
 .intro p{margin:10px 0;color:#3b4453}
 .intro table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--sand);margin:14px 0;font-size:.95rem}
 .intro th{background:var(--navy);color:#fff;padding:9px 12px;text-align:left;font-size:.82rem;text-transform:uppercase;letter-spacing:.05em}
@@ -58,22 +58,22 @@ a{color:var(--blue-accent)}
 .a-card.tier-quick{border-left:4px solid var(--green-accent)}
 .a-head{display:flex;align-items:center;gap:16px;width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:18px 20px;font-family:inherit}
 .a-head:hover{background:#fdf8ee}
-.a-num{font-family:'Libre Baskerville',serif;font-weight:700;color:var(--rule);font-size:1.2rem;min-width:34px}
+.a-num{font-family:'EB Garamond',Georgia,serif;font-weight:700;color:var(--rule);font-size:1.2rem;min-width:34px}
 .a-titlewrap{flex:1}
-.a-title{display:block;font-family:'Libre Baskerville',serif;font-weight:700;color:var(--navy);font-size:1.06rem;line-height:1.35}
+.a-title{display:block;font-family:'EB Garamond',Georgia,serif;font-weight:700;color:var(--navy);font-size:1.06rem;line-height:1.35}
 .a-meta{display:flex;gap:12px;align-items:center;margin-top:5px;flex-wrap:wrap}
 .tier-tag{font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:2px 9px;border-radius:3px}
 .tag-high{background:#fbe5e5;color:var(--texred-dark)}
 .tag-med{background:#fdf0dc;color:var(--warm)}
 .tag-quick{background:#e3f2e7;color:var(--green-accent)}
 .a-time{font-size:.8rem;color:var(--muted)}
-.a-pts{font-family:'Libre Baskerville',serif;font-weight:700;color:var(--texred);font-size:1.4rem;line-height:1}
-.a-pts small{display:block;font-family:'Source Sans 3',sans-serif;font-weight:600;font-size:.62rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;text-align:center}
+.a-pts{font-family:'EB Garamond',Georgia,serif;font-weight:700;color:var(--texred);font-size:1.4rem;line-height:1}
+.a-pts small{display:block;font-family:'Inter',sans-serif;font-weight:600;font-size:.62rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;text-align:center}
 .a-chev{color:var(--muted);transition:transform .2s}
 .a-card.open .a-chev{transform:rotate(180deg)}
 .a-body{display:none;padding:6px 26px 28px;border-top:1px solid var(--sand)}
 .a-card.open .a-body{display:block}
-.a-body h3{font-family:'Libre Baskerville',serif;color:var(--texred);font-size:1.02rem;margin:22px 0 8px}
+.a-body h3{font-family:'EB Garamond',Georgia,serif;color:var(--texred);font-size:1.02rem;margin:22px 0 8px}
 .a-body h4{color:var(--navy);font-size:.93rem;margin:16px 0 6px;text-transform:uppercase;letter-spacing:.05em}
 .a-body p{margin:9px 0;color:#3b4453}
 .a-body ul,.a-body ol{margin:8px 0 8px 24px}
@@ -86,9 +86,12 @@ a{color:var(--blue-accent)}
 footer{background:var(--navy);color:rgba(255,255,255,.6);text-align:center;padding:32px 20px;font-size:.87rem}
 footer a{color:rgba(255,255,255,.85)}
 @media(max-width:600px){.a-head{padding:14px 14px;gap:10px}.a-body{padding:4px 16px 22px}}
+.tcc-brand-stripe{display:flex;height:6px;width:100%}.tcc-brand-stripe>span{flex:1;display:block}.tcc-brand-stripe .nv{background:#002b5c}.tcc-brand-stripe .tn{background:#dac792}.tcc-brand-stripe .bg{background:#98002e}.tcc-brand-stripe .tl{background:#00788a}
 </style>
 </head>
 <body>
+<div class="tcc-brand-stripe" aria-hidden="true"><span class="nv"></span><span class="tn"></span><span class="bg"></span><span class="tl"></span></div>
+
 <div class="topbar"><a href="index.html">← Texas In Action home</a></div>
 <header class="pagehead">
   <div class="wm">TEXAS<span class="in">★ IN ★</span>ACTION</div>
@@ -106,7 +109,6 @@ footer a{color:rgba(255,255,255,.85)}
 </div></div>
 
 <div class="container intro"><h1>Texas IN Action (TIA) — Complete Assignment Guide</h1>
-<h2>DRAFT FOR INSTRUCTOR REVIEW</h2>
 <p><strong>Texas IN Action</strong> is a menu-based assessment system for GOVT 2306 (Texas Government). Instead of high-stakes exams, students earn <strong>100 points</strong> through authentic engagement with Texas state and local government — the commissioners courts, special purpose districts, school boards, appraisal districts, and utility authorities that shape daily life in Texas but that most Texans never see.</p>
 <h3>How TIA Works</h3>
 <ul>
