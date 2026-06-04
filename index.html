@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Texas In Action (TIA) — Experiential Texas Government for Community Colleges</title>
+<meta name="description" content="Texas In Action replaces traditional exams in Texas Government courses with hands-on engagement: commissioners courts, hidden districts, property taxes, data centers, and the local governments that shape daily Texan life.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1a2744;
+  --ink: #1e293b;
+  --texred: #9b1c1f;       /* deep Texas red — TIA's signature accent */
+  --texred-dark: #7a1417;
+  --warm: #92400e;
+  --amber: #d97706;
+  --gold: #fbbf24;
+  --cream: #fefbf4;
+  --sand: #e8e0d0;
+  --rule: #d4cabb;
+  --muted: #6b7280;
+  --green-accent: #15803d;
+  --blue-accent: #1d4ed8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 17px;
+}
+.topbar {
+  background: var(--texred-dark);
+  color: rgba(255,255,255,0.78);
+  font-size: 13px;
+  padding: 8px 0;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+.topbar strong { color: #fff; }
+
+/* ============ HERO with stacked wordmark ============ */
+.hero {
+  background: linear-gradient(170deg, var(--navy) 0%, #23304f 45%, #31426b 100%);
+  color: white;
+  padding: 72px 24px 64px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 18% 85%, rgba(155,28,31,0.28) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 15%, rgba(251,191,36,0.10) 0%, transparent 50%);
+  pointer-events: none;
+}
+/* faint lone star watermark */
+.hero::after {
+  content: '★';
+  position: absolute;
+  right: -40px; top: -60px;
+  font-size: 360px;
+  color: rgba(255,255,255,0.035);
+  line-height: 1;
+  pointer-events: none;
+}
+.hero-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+.hero-label {
+  display: inline-block;
+  background: rgba(155,28,31,0.30);
+  border: 1px solid rgba(244,180,180,0.45);
+  color: #fecaca;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  border-radius: 3px;
+  margin-bottom: 30px;
+}
+/* The wordmark: TEXAS big / IN small / ACTION big */
+.wordmark {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-weight: 700;
+  line-height: 1.0;
+  margin-bottom: 26px;
+  user-select: none;
+}
+.wm-row { display: block; }
+.wm-big {
+  font-size: clamp(3.1rem, 10vw, 6rem);
+  letter-spacing: 0.04em;
+  display: block;
+  animation: rise 0.9s ease both;
+}
+.wm-big.action { color: var(--gold); animation-delay: 0.25s; }
+.wm-in {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 600;
+  font-size: clamp(0.95rem, 2.4vw, 1.35rem);
+  letter-spacing: 0.55em;
+  text-indent: 0.55em; /* visually centers tracked text */
+  color: rgba(255,255,255,0.85);
+  margin: 14px 0;
+  animation: rise 0.9s ease 0.12s both;
+}
+.wm-in .star { color: var(--gold); font-size: 0.85em; letter-spacing: 0; text-indent: 0; }
+.wm-in .rule {
+  height: 1px; width: clamp(36px, 8vw, 90px);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45));
+}
+.wm-in .rule.r { background: linear-gradient(90deg, rgba(255,255,255,0.45), transparent); }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-subtitle {
+  font-size: 1.16rem;
+  color: rgba(255,255,255,0.82);
+  max-width: 640px;
+  line-height: 1.7;
+  margin: 0 auto 34px;
+  animation: rise 0.9s ease 0.4s both;
+}
+.hero-cta {
+  display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+  animation: rise 0.9s ease 0.5s both;
+}
+.btn {
+  display: inline-block;
+  padding: 13px 28px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary {
+  background: var(--texred);
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(155,28,31,0.45);
+}
+.btn-primary:hover { background: #b02427; }
+.btn-ghost {
+  border: 1px solid rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.9);
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.08); }
+.hero-meta {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.5);
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: 20px;
+  margin-top: 42px;
+  animation: rise 0.9s ease 0.6s both;
+}
+.hero-meta strong { color: rgba(255,255,255,0.8); }
+
+/* ============ Sections ============ */
+.container { max-width: 940px; margin: 0 auto; padding: 0 24px; }
+section { padding: 62px 0; }
+section + section { border-top: 1px solid var(--rule); }
+section h2 {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 1.85rem;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+section h2 .accent { color: var(--texred); }
+.section-lead {
+  font-size: 1.05rem;
+  color: var(--muted);
+  margin-bottom: 36px;
+  max-width: 660px;
+}
+.star-divider {
+  text-align: center;
+  color: var(--texred);
+  letter-spacing: 1.6em;
+  text-indent: 1.6em;
+  font-size: 0.8rem;
+  margin: 6px 0 0;
+  opacity: 0.7;
+}
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 20px;
+  margin: 36px 0;
+}
+.stat-card {
+  background: white;
+  border: 1px solid var(--sand);
+  border-radius: 6px;
+  border-top: 3px solid var(--texred);
+  padding: 26px 18px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(26,39,68,0.05);
+}
+.stat-num {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: var(--texred);
+  line-height: 1.1;
+}
+.stat-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.table-wrap { overflow-x: auto; }
+.tiers-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border: 1px solid var(--sand);
+  border-radius: 6px;
+  overflow: hidden;
+  font-size: 0.97rem;
+}
+.tiers-table th {
+  background: var(--navy);
+  color: white;
+  text-align: left;
+  padding: 13px 16px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.tiers-table td { padding: 14px 16px; border-top: 1px solid var(--sand); vertical-align: top; }
+.tier-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 9px; }
+.dot-high { background: var(--texred); }
+.dot-med { background: var(--amber); }
+.dot-quick { background: var(--green-accent); }
+
+/* assignment preview cards */
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 8px;
+}
+.preview-card {
+  background: white;
+  border: 1px solid var(--sand);
+  border-radius: 6px;
+  padding: 24px 22px 20px;
+  position: relative;
+  box-shadow: 0 1px 4px rgba(26,39,68,0.05);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.preview-card:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(26,39,68,0.10); }
+.preview-card .tier-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+.tag-high  { background: #fbe5e5; color: var(--texred-dark); }
+.tag-med   { background: #fdf0dc; color: var(--warm); }
+.tag-quick { background: #e3f2e7; color: var(--green-accent); }
+.preview-card h3 {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 1.08rem;
+  color: var(--navy);
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+.preview-card p { font-size: 0.92rem; color: var(--muted); line-height: 1.6; }
+.preview-card .pts {
+  position: absolute;
+  top: 20px; right: 18px;
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-weight: 700;
+  color: var(--texred);
+  font-size: 1.05rem;
+}
+.center-cta { text-align: center; margin-top: 38px; }
+.btn-navy { background: var(--navy); color: #fff; box-shadow: 0 4px 16px rgba(26,39,68,0.3); }
+.btn-navy:hover { background: #25365c; }
+
+/* safety thread */
+.safety-band {
+  background: white;
+  border: 1px solid var(--sand);
+  border-left: 4px solid var(--green-accent);
+  border-radius: 6px;
+  padding: 26px 28px;
+  margin-top: 10px;
+}
+.safety-band h3 {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  color: var(--navy);
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+}
+.safety-band p { color: var(--muted); font-size: 0.97rem; }
+
+/* resources */
+.resource-list { list-style: none; margin-top: 10px; }
+.resource-list li {
+  background: white;
+  border: 1px solid var(--sand);
+  border-radius: 6px;
+  margin-bottom: 14px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.resource-list .r-star { color: var(--texred); font-size: 1rem; }
+.resource-list a {
+  color: var(--blue-accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+.resource-list a:hover { text-decoration: underline; }
+.resource-list .r-desc { color: var(--muted); font-size: 0.93rem; flex-basis: 100%; margin-left: 32px; }
+.coming-soon {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.coming-soon .pill {
+  font-size: 0.7rem;
+  background: var(--sand);
+  color: var(--warm);
+  padding: 2px 9px;
+  border-radius: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+/* sibling project */
+.sibling {
+  background: linear-gradient(170deg, var(--navy), #2a3a5e);
+  border-radius: 8px;
+  color: white;
+  padding: 36px 34px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.sibling h3 { font-family: 'Libre Baskerville', Georgia, serif; font-size: 1.3rem; margin-bottom: 6px; }
+.sibling p { color: rgba(255,255,255,0.75); font-size: 0.96rem; max-width: 520px; }
+
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+  padding: 36px 24px;
+  font-size: 0.88rem;
+  margin-top: 20px;
+}
+footer .f-star { color: var(--gold); }
+footer a { color: rgba(255,255,255,0.85); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+#contact-email { font-weight: 600; }
+@media (max-width: 560px) {
+  .preview-card .pts { position: static; display: block; margin-bottom: 6px; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar"><strong>Texas In Action</strong> · A free, open experiential framework for GOVT 2306 · Sibling project of the Civic Action Project</div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Experiential Assessment · Texas State &amp; Local Government</div>
+    <h1 class="wordmark" aria-label="Texas In Action">
+      <span class="wm-row wm-big">TEXAS</span>
+      <span class="wm-row wm-in"><span class="rule"></span><span class="star">★</span>IN<span class="star">★</span><span class="rule r"></span></span>
+      <span class="wm-row wm-big action">ACTION</span>
+    </h1>
+    <p class="hero-subtitle">
+      Hidden districts. Commissioners courts. Property taxes. Data centers. The grid.
+      Students earn 100 points through real engagement with the Texas governments
+      that shape their daily lives — no high-stakes exams required.
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="assignments.html">Explore the 39 Assignments</a>
+      <a class="btn btn-ghost" href="#how">How It Works</a>
+    </div>
+    <div class="hero-meta">
+      Created by <strong>Jared Alan Stewart</strong> · Government Faculty, Tarrant County College
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section id="how">
+  <div class="container">
+    <h2>What is <span class="accent">Texas In Action</span>?</h2>
+    <div class="star-divider">★ ★ ★</div>
+    <p class="section-lead">
+      TIA is a menu-based assessment system designed for Texas Government (GOVT 2306) at community colleges.
+      Instead of exams, students choose from a menu of authentic activities — mapping the invisible special
+      districts layered over their own address, watching their county's commissioners court, dissecting a real
+      property tax bill, investigating a data center deal — and earn points by doing Texas government, not just reading about it.
+    </p>
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-num">39</div><div class="stat-label">Assignments</div></div>
+      <div class="stat-card"><div class="stat-num">100</div><div class="stat-label">Points to Complete</div></div>
+      <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Effort Tiers</div></div>
+      <div class="stat-card"><div class="stat-num">555</div><div class="stat-label">Points Available</div></div>
+    </div>
+    <div class="table-wrap">
+    <table class="tiers-table">
+      <thead><tr><th>Tier</th><th>Point Range</th><th>Activities</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tier-dot dot-high"></span>Higher Effort</td><td>20–30 pts</td><td>12</td><td>Hidden Districts Investigation, Commissioners Court Field Study, The Data Center Reckoning</td></tr>
+        <tr><td><span class="tier-dot dot-med"></span>Medium Effort</td><td>10–15 pts</td><td>13</td><td>Fix My Street, JP Court Observation, The Week the Heat Went Out (Winter Storm Uri)</td></tr>
+        <tr><td><span class="tier-dot dot-quick"></span>Quick Engagement</td><td>5–8 pts</td><td>14</td><td>Texas Impact Reflections, Meet Your Officials, Emergency Ready in 60</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Signature <span class="accent">Assignments</span></h2>
+    <p class="section-lead">
+      Every assignment includes a step-by-step "How to Get Started" guide — written for students who have
+      never attended a public meeting, looked up a tax record, or known their commissioner's name. Most haven't. That's the point.
+    </p>
+    <div class="preview-grid">
+      <div class="preview-card">
+        <span class="pts">30 pts</span>
+        <span class="tier-tag tag-high">Higher Effort</span>
+        <h3>Hidden Districts Investigation</h3>
+        <p>Map every invisible special purpose district taxing your home address — MUDs, ESDs, hospital districts — using the Comptroller's public database. Find out what they charge and who governs them.</p>
+      </div>
+      <div class="preview-card">
+        <span class="pts">25 pts</span>
+        <span class="tier-tag tag-high">Higher Effort</span>
+        <h3>Commissioners Court Field Study</h3>
+        <p>It's not a court. It runs your county. Attend or stream a full meeting, track agenda items, and meet Texas's most misunderstood government.</p>
+      </div>
+      <div class="preview-card">
+        <span class="pts">30 pts</span>
+        <span class="tier-tag tag-high">Higher Effort</span>
+        <h3>The Data Center Reckoning</h3>
+        <p>Investigate a real Texas data center: who approved it, what incentives it got, what it demands from the grid and water supply — and who pays.</p>
+      </div>
+      <div class="preview-card">
+        <span class="pts">12 pts</span>
+        <span class="tier-tag tag-med">Medium Effort</span>
+        <h3>Fix My Street</h3>
+        <p>That pothole has an owner. Identify a real infrastructure problem, figure out which government is responsible, and file an official report — then track what happens.</p>
+      </div>
+      <div class="preview-card">
+        <span class="pts">15 pts</span>
+        <span class="tier-tag tag-med">Medium Effort</span>
+        <h3>The Week the Heat Went Out</h3>
+        <p>Interview someone who lived through Winter Storm Uri (February 2021) and connect their story to the failures — and reforms — of Texas energy governance.</p>
+      </div>
+      <div class="preview-card">
+        <span class="pts">6 pts</span>
+        <span class="tier-tag tag-quick">Quick Engagement</span>
+        <h3>Meet Your Officials</h3>
+        <p>From your constable to the governor: build your complete personal representation roster from your actual address. Most students can't name their commissioner — yet.</p>
+      </div>
+    </div>
+    <div class="center-cta">
+      <a class="btn btn-navy" href="assignments.html">See All 39 Assignments &amp; Rubrics →</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>A <span class="accent">Safety</span> Thread, Woven Through</h2>
+    <div class="safety-band">
+      <h3>Built on the research</h3>
+      <p>
+        Civic engagement research (Ballard et al.) finds that safety-focused projects produce some of the strongest
+        engagement effects — people show up for what keeps their families safe. TIA integrates a safety option into
+        every tier: the <strong>Disaster-Ready Community Audit</strong> (Higher), <strong>The Week the Heat Went Out</strong> (Medium),
+        and <strong>Emergency Ready in 60</strong> (Quick) — plus grid and water governance assignments that connect
+        preparedness to the institutions behind it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Instructor <span class="accent">Resources</span></h2>
+    <p class="section-lead">Everything is free, open, and designed for adoption — single-file tools that run in any browser, complete/incomplete rubrics built for grading efficiency across sections.</p>
+    <ul class="resource-list">
+      <li><span class="r-star">★</span><a href="assignments.html">Interactive Assignment &amp; Rubric Browser</a><span class="r-desc">All 39 assignments with full prompts, "How to Get Started" guides, and complete/incomplete checklist rubrics. Filterable by tier.</span></li>
+      <li><span class="r-star">★</span><a href="TIA_All_Assignments.md">Complete Assignment Guide (Markdown)</a><span class="r-desc">The full guide as a single document — ready to adapt, print, or import into your LMS.</span></li>
+      <li><span class="r-star">★</span><span class="coming-soon">Multi-Section Instructor Tracker<span class="pill">Coming Soon</span></span><span class="r-desc">Single-file grade tracker with CSV roster import, per-assignment rubric checklists, and JSON export — the TIA edition of the CAP tracker.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="sibling">
+      <div>
+        <h3>Teaching Federal Government too?</h3>
+        <p>TIA's sibling project, the <strong>Civic Action Project (CAP)</strong>, brings the same experiential framework
+        to GOVT 2305 — distinct assignments, zero recycled content between courses.</p>
+      </div>
+      <a class="btn btn-primary" href="https://professorjaredalanstewart.github.io/Civic-Action-Project/">Visit the CAP →</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p><span class="f-star">★</span> Texas In Action · Created by Jared Alan Stewart · Tarrant County College <span class="f-star">★</span></p>
+  <p style="margin-top:8px;">Contact: <span id="contact-email"></span> · Free for educational use</p>
+  <script>
+    // Assembled in JS to avoid email-mangling by obfuscation layers
+    (function(){
+      var u = 'jared.stewart', d = 'tccd.edu';
+      var e = u + '@' + d;
+      var s = document.getElementById('contact-email');
+      var a = document.createElement('a');
+      a.href = 'mai' + 'lto:' + e; a.textContent = e;
+      s.appendChild(a);
+    })();
+  </script>
+</footer>
+
+</body>
+</html>
