@@ -9,7 +9,12 @@
 | File | Purpose |
 |---|---|
 | `index.html` | Landing page |
+| `why-tia.html` | The research case for TIA (civic education theory, SDT, service-learning, safety-engagement findings) |
 | `assignments.html` | Interactive browser: all 39 assignments with prompts, "How to Get Started" guides, and Complete/Incomplete rubrics |
+| `TIA - Build and Track Activities and Points.html` | Instructor tracker: multi-section tracking, CSV roster import, custom Canvas package export, gradebook fill |
+| `TIA Path to 100 Points.html` | Student planner with running totals and suggested paths (including a safety route) |
+| `TIA Assignments Complete Guide.pdf` | Printable guide with all rubrics |
+| `TIA_All_39_Assignments.imscc` | Canvas import package: all 39 assignments as pass/fail, organized by tier modules |
 | `TIA_All_Assignments.md` | The complete assignment guide as a single Markdown document |
 
 ## The Framework
