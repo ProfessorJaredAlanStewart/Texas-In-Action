@@ -3013,7 +3013,7 @@
         // ---- Collapsible tier sections ----
         // Each tier's collapsed/expanded state persists in localStorage so
         // reloads remember what the instructor had open. Defaults to expanded.
-        const COLLAPSE_KEY = 'capTrackerCollapsedTiers';
+        const COLLAPSE_KEY = 'tiaTrackerCollapsedTiers';
         function getCollapsedTiers() {
             try {
                 const raw = localStorage.getItem(COLLAPSE_KEY);
@@ -3271,11 +3271,11 @@
         }
         
         function saveCustomAssignments() {
-            localStorage.setItem('capTrackerCustomAssignments', JSON.stringify(customAssignments));
+            localStorage.setItem('tiaTrackerCustomAssignments', JSON.stringify(customAssignments));
         }
         
         function loadCustomAssignments() {
-            const saved = localStorage.getItem('capTrackerCustomAssignments');
+            const saved = localStorage.getItem('tiaTrackerCustomAssignments');
             if (saved) {
                 try {
                     customAssignments = JSON.parse(saved);
@@ -3335,7 +3335,7 @@
         }
         
         function loadSavedConfiguration() {
-            const saved = localStorage.getItem('capTrackerCompleteData');
+            const saved = localStorage.getItem('tiaTrackerCompleteData');
             if (saved) {
                 try {
                     const data = JSON.parse(saved);
@@ -3949,7 +3949,7 @@
         }
         
         function saveConfiguration() {
-            localStorage.setItem('capTrackerCompleteData', JSON.stringify({
+            localStorage.setItem('tiaTrackerCompleteData', JSON.stringify({
                 config: activeConfig,
                 sections: trackerSections,
                 customAssignments: customAssignments
