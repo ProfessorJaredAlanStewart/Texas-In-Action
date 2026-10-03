@@ -1182,6 +1182,11 @@
             border-left: 3px solid #222 !important;
         }
         
+        /* ── Heavier divider where one effort tier ends and the next begins ── */
+        .tier-boundary {
+            border-left: 6px double #111 !important;
+        }
+        
         /* ── High-contrast completion marks ── */
         .completed {
             color: #1a1a1a;
@@ -1303,6 +1308,362 @@
         #tableBody tr .student-name:hover {
             background-color: #e6f2f4;
         }
+
+        /* ── Tracker column search ── */
+        .tracker-search-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 6px 0 12px;
+            padding: 10px 14px;
+            background: #f5f8fc;
+            border: 1px solid #bfe0e5;
+            border-radius: 8px;
+        }
+        .tracker-search-bar .tsearch-input {
+            flex: 1;
+            min-width: 240px;
+            padding: 10px 14px;
+            border: 2px solid #bcccdc;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+        }
+        .tracker-search-bar .tsearch-input:focus {
+            outline: none;
+            border-color: #9b1c1f;
+            box-shadow: 0 0 0 3px rgba(155,28,31,0.15);
+        }
+        .tracker-search-bar .tsearch-count {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #9b1c1f;
+            white-space: nowrap;
+            min-width: 84px;
+        }
+        .tracker-search-bar .tsearch-count.none { color: #98002e; }
+        .tracker-search-bar label.tsearch-hide {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9em;
+            color: #002b5c;
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+        .tracker-search-bar label.tsearch-hide input { width: 16px; height: 16px; accent-color: #9b1c1f; cursor: pointer; }
+        .tracker-search-bar .tsearch-hint {
+            flex-basis: 100%;
+            font-size: 0.82em;
+            color: #667;
+            font-style: italic;
+        }
+
+        /* Matching assignment columns pop; the ring layers on top of the
+           category color so the tier is still readable. */
+        #trackerTable th.col-match {
+            box-shadow: 0 0 0 3px #f9a825, 0 4px 10px rgba(0,0,0,0.25);
+            animation: tsearch-pulse 1s ease;
+        }
+        #trackerTable td.col-match {
+            background-image: linear-gradient(rgba(249,168,37,0.22), rgba(249,168,37,0.22));
+            box-shadow: inset 2px 0 0 #f9a825, inset -2px 0 0 #f9a825;
+        }
+        @keyframes tsearch-pulse {
+            0%   { box-shadow: 0 0 0 3px #fff59d, 0 4px 10px rgba(0,0,0,0.25); }
+            100% { box-shadow: 0 0 0 3px #f9a825, 0 4px 10px rgba(0,0,0,0.25); }
+        }
+        /* The column you're parked on while cycling matches with Enter */
+        #trackerTable th.col-current {
+            box-shadow: 0 0 0 4px #e65100, 0 6px 14px rgba(0,0,0,0.35);
+        }
+        /* Non-matches fade back (kept in place so you don't lose the grid) */
+        #trackerTable th.col-dim,
+        #trackerTable td.col-dim { opacity: 0.28; }
+        /* Strict "Hide non-matches" mode collapses to just the matches */
+        #trackerTable th.col-hidden,
+        #trackerTable td.col-hidden { display: none; }
+
+        /* ── Setup landing: compact stepper + progressive disclosure ── */
+        .setup-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+        .setup-step {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 14px 16px;
+            text-decoration: none;
+            color: #2b3a44;
+            border: 1.5px solid transparent;
+            box-shadow: 0 2px 8px rgba(0,43,92,0.06);
+            transition: border-color .15s ease, transform .15s ease;
+        }
+        .setup-step:hover { border-color: #9b1c1f; transform: translateY(-2px); }
+        .setup-step-num {
+            flex-shrink: 0;
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            background: #002b5c;
+            color: #fff;
+            font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.95em;
+        }
+        .setup-step-optional .setup-step-num { background: #9b1c1f; }
+        .setup-step-text { font-size: 0.88em; line-height: 1.45; }
+        .setup-step-text strong { color: #002b5c; display: block; margin-bottom: 2px; }
+        @media (max-width: 1000px) { .setup-steps { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 640px) { .setup-steps { grid-template-columns: 1fr; } }
+        .setup-quick {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            background: #fff8e6;
+            border: 1.5px solid #dac792;
+            border-radius: 10px;
+            padding: 10px 16px;
+            margin-bottom: 12px;
+            font-size: 0.93em;
+            color: #5a4520;
+        }
+        .setup-quick strong { color: #4a3815; }
+        .quick-btn {
+            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 9px 18px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: transform .15s ease, box-shadow .15s ease;
+        }
+        .quick-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(27,94,32,0.3); }
+        .quick-link {
+            color: #98002e;
+            font-weight: 700;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: border-color .15s ease;
+        }
+        .quick-link:hover { border-bottom-color: #98002e; }
+        .setup-more > summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: #9b1c1f;
+            font-size: 0.92em;
+            padding: 4px 2px;
+            user-select: none;
+        }
+        .setup-more > summary:hover { color: #005a6a; text-decoration: underline; }
+        .setup-more[open] > summary { margin-bottom: 14px; }
+        .setup-toolbar {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 0 0 14px;
+        }
+        .setup-toolbar .assignment-search { flex: 1; min-width: 240px; margin: 0; }
+        .due-details {
+            background: #e6f2f4;
+            border: 2px solid #9b1c1f;
+            border-radius: 10px;
+            margin: 0 0 18px;
+            overflow: hidden;
+        }
+        .due-details > summary {
+            cursor: pointer;
+            padding: 11px 16px;
+            font-weight: 700;
+            color: #002b5c;
+            font-size: 0.95em;
+            user-select: none;
+        }
+        .due-details > summary:hover { background: #d4e9ec; }
+        .due-details-hint {
+            font-weight: 500;
+            color: #4a5a64;
+            font-size: 0.9em;
+            margin-left: 6px;
+            font-style: italic;
+        }
+        .due-details .due-date-bar {
+            border: none;
+            border-top: 1.5px solid #bfe0e5;
+            border-radius: 0;
+            margin: 0;
+        }
+        /* ── Due dates + setup usability ── */
+        .sticky-mini {
+            position: sticky;
+            top: 0;
+            z-index: 500;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            background: #002b5c;
+            color: #fff;
+            border-radius: 10px;
+            padding: 10px 18px;
+            margin: 0 0 14px;
+            font-size: 0.92em;
+            box-shadow: 0 4px 14px rgba(0,43,92,0.35);
+        }
+        .sticky-mini b { color: #dac792; }
+        .sticky-mini .mini-warn { color: #ffb3c1; font-weight: 600; }
+        .assignment-search {
+            width: 100%;
+            padding: 11px 16px;
+            border: 2px solid #d4dde2;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.98em;
+            margin: 0 0 14px;
+        }
+        .assignment-search:focus {
+            outline: none;
+            border-color: #9b1c1f;
+            box-shadow: 0 0 6px rgba(155,28,31,0.3);
+        }
+        .due-date-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            background: #e6f2f4;
+            border: 2px solid #9b1c1f;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin: 0 0 18px;
+            font-size: 0.93em;
+            color: #2b3a44;
+        }
+        .due-date-bar-label {
+            font-weight: 700;
+            color: #002b5c;
+        }
+        .due-date-bar input[type="date"],
+        .due-date-bar input[type="time"],
+        .due-date-bar select {
+            padding: 7px 10px;
+            border: 1.5px solid #d4dde2;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: inherit;
+            background: #fff;
+        }
+        .due-date-bar input:focus, .due-date-bar select:focus {
+            outline: none;
+            border-color: #9b1c1f;
+        }
+        .due-btn {
+            background: #002b5c;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .due-btn:hover { filter: brightness(1.1); }
+        .due-btn-clear {
+            background: #fff;
+            color: #98002e;
+            border: 1.5px solid #98002e;
+        }
+        .due-date-note {
+            flex-basis: 100%;
+            font-size: 0.88em;
+            color: #4a5a64;
+            font-style: italic;
+        }
+        .date-input {
+            padding: 6px 8px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+        }
+        .date-input:focus {
+            outline: none;
+            border-color: #9b1c1f;
+            box-shadow: 0 0 5px rgba(155,28,31,0.3);
+        }
+        .date-input:disabled {
+            background: #f5f5f5;
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .tier-select-btns {
+            display: inline-flex;
+            gap: 6px;
+            margin-left: 10px;
+        }
+        .tier-select-btns button {
+            background: rgba(255,255,255,0.15);
+            border: 1.5px solid rgba(255,255,255,0.45);
+            color: #fff;
+            border-radius: 6px;
+            padding: 3px 10px;
+            font-size: 0.62em;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            text-shadow: none;
+            transition: background 0.15s ease;
+        }
+        .tier-select-btns button:hover { background: rgba(255,255,255,0.3); }
+        .target-warning {
+            display: none;
+            margin-top: 14px;
+            background: #fbe9ee;
+            border-left: 4px solid #98002e;
+            color: #6e0020;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 0.92em;
+        }
+        .th-due {
+            display: inline-block;
+            font-size: 0.78em;
+            font-weight: 600;
+            opacity: 0.95;
+            margin-top: 2px;
+        }
+        .site-topbar {
+            background: #002b5c;
+            color: rgba(255,255,255,0.72);
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            font-size: 13px;
+            letter-spacing: 0.04em;
+            text-align: center;
+            padding: 9px 16px;
+        }
+        .site-topbar a {
+            color: #dac792;
+            text-decoration: none;
+            font-weight: 600;
+            white-space: nowrap;
+            border-bottom: 1px solid transparent;
+            transition: color .15s ease, border-color .15s ease;
+        }
+        .site-topbar a:hover,
+        .site-topbar a:focus-visible { color: #fff; border-bottom-color: #dac792; }
         .tcc-brand-stripe { display:flex; height:6px; width:100%; }
         .tcc-brand-stripe > span { flex:1; display:block; }
         .tcc-brand-stripe .nv { background:#002b5c; }
@@ -1328,6 +1689,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
+<div class="site-topbar">
+    <a href="https://jaredalanstewart.com/">&#8592; jaredalanstewart.com</a>
+    &nbsp;·&nbsp;
+    <a href="index.html">TIA home</a>
+</div>
 <div class="tcc-brand-stripe" aria-hidden="true"><span class="nv"></span><span class="tn"></span><span class="bg"></span><span class="tl"></span></div>
     <div class="main-container">
         <!-- Setup Phase - DEFAULT VISIBLE -->
@@ -1339,12 +1705,37 @@
             
             <div class="setup-container">
                 <div class="setup-instructions">
-                    <h2>📋 Setup Instructions</h2>
-                    <p class="setup-intro">
-                        Build the TIA that fits your course. Pick the activities you'll actually use,
-                        set their point values, and either start tracking student progress or hand the
-                        whole package off to Canvas in one click.
-                    </p>
+                    <h2>📋 Build your TIA in three steps</h2>
+                    <div class="setup-steps">
+                        <a class="setup-step" href="#assignmentSections">
+                            <span class="setup-step-num">1</span>
+                            <span class="setup-step-text"><strong>Pick activities</strong>
+                            Check the ones you want from the list below. "View Details" shows each rubric.</span>
+                        </a>
+                        <a class="setup-step" href="#dueDetails" onclick="var d=document.getElementById('dueDetails'); if (d) d.open = true;">
+                            <span class="setup-step-num">2</span>
+                            <span class="setup-step-text"><strong>Set points &amp; due dates</strong>
+                            Edit any point value. Due dates are optional &mdash; one click applies a date to everything.</span>
+                        </a>
+                        <a class="setup-step" href="#canvasExportPanel" onclick="jumpToCanvasExport(event)">
+                            <span class="setup-step-num">3</span>
+                            <span class="setup-step-text"><strong>Export to Canvas</strong>
+                            Download one <code>.imscc</code> file and import it. Assignments, rubrics, and dates arrive ready to use.</span>
+                        </a>
+                        <a class="setup-step setup-step-optional" href="#setupActions">
+                            <span class="setup-step-num">＋</span>
+                            <span class="setup-step-text"><strong>Track students <em>(optional)</em></strong>
+                            "Generate Tracker" opens a grid for marking completions all semester.</span>
+                        </a>
+                    </div>
+                    <div class="setup-quick">
+                        <span aria-hidden="true">⚡</span>
+                        <span><strong>Fast path:</strong> want the whole TIA at standard points?</span>
+                        <button type="button" class="quick-btn" onclick="selectAllAssignments()">✓ Select all 39</button>
+                        <a class="quick-link" href="#canvasExportPanel" onclick="jumpToCanvasExport(event)">then Export to Canvas ↓</a>
+                    </div>
+                    <details class="setup-more">
+                        <summary>Full instructions &amp; tips (customizing, backups, add-ons)</summary>
                     <div class="setup-cards">
                         <div class="setup-card">
                             <div class="setup-card-icon">🔎</div>
@@ -1402,10 +1793,20 @@
                             </ul>
                         </div>
                     </div>
+                    </details>
                 </div>
                 
-                <div class="tier-controls">
-                    <span class="tier-controls-label">Tier display:</span>
+                <div class="sticky-mini" id="stickyMini" aria-live="polite">
+                    <span>Selected: <b id="miniSelected">0</b></span>
+                    <span>Points: <b id="miniPoints">0</b> / <b id="miniTarget">100</b> target</span>
+                    <span id="miniDated"></span>
+                    <span class="mini-warn" id="miniWarn" style="display:none;">⚠ below target</span>
+                </div>
+
+                <div class="setup-toolbar">
+                    <input type="search" id="assignmentSearch" class="assignment-search"
+                           placeholder="🔎 Filter assignments by name…"
+                           oninput="filterAssignments(this.value)" aria-label="Filter assignments by name">
                     <button type="button" class="tier-control-btn" onclick="setAllTiers(false)">
                         ▾ Expand all
                     </button>
@@ -1413,6 +1814,28 @@
                         ▸ Collapse all
                     </button>
                 </div>
+
+                <details class="due-details" id="dueDetails">
+                    <summary>📅 Due dates<span class="due-details-hint">optional &mdash; one date for everything, or per assignment</span></summary>
+                <div class="due-date-bar" id="dueDateBar">
+                    <input type="date" id="bulkDueDate" aria-label="Bulk due date">
+                    <span>at</span>
+                    <input type="time" id="bulkDueTime" value="23:59" onchange="onDueTimeChanged()" aria-label="Due time for all dated assignments">
+                    <span>for</span>
+                    <select id="bulkDueScope" aria-label="Which selected assignments to apply the date to">
+                        <option value="all">All selected assignments</option>
+                        <option value="Higher Effort">Selected Higher Effort</option>
+                        <option value="Medium Effort">Selected Medium Effort</option>
+                        <option value="Quick Engagement">Selected Quick Engagement</option>
+                        <option value="Custom">Selected Custom</option>
+                    </select>
+                    <button type="button" class="due-btn" onclick="applyBulkDueDate()">Apply</button>
+                    <button type="button" class="due-btn due-btn-clear" onclick="clearDueDates()">Clear all dates</button>
+                    <span class="due-date-note">Dates are optional and export into the Canvas package (blank = no due date).
+                    Every dated assignment uses the time shown here; individual dates can be set or changed
+                    in each assignment's row below once it's checked.</span>
+                </div>
+                </details>
 
                 <div id="assignmentSections">
                     <!-- This will be populated by JavaScript -->
@@ -1433,16 +1856,21 @@
                             <div class="config-stat-label">Total Possible Points</div>
                             <div class="config-stat-value" id="totalPoints">0</div>
                         </div>
+                        <div class="config-stat">
+                            <div class="config-stat-label">With Due Dates</div>
+                            <div class="config-stat-value" id="datedCount">0</div>
+                        </div>
                     </div>
                     <div style="text-align: center; margin-top: 20px;">
                         <label style="font-weight: bold; font-size: 1.1em;">
                             Target Completion Points:
-                            <input type="number" class="target-points-input" id="targetPoints" value="100" min="0">
+                            <input type="number" class="target-points-input" id="targetPoints" value="100" min="0" oninput="updateSummary()">
                         </label>
                     </div>
+                    <div class="target-warning" id="targetWarning"></div>
                 </div>
                 
-                <div class="action-buttons">
+                <div class="action-buttons" id="setupActions">
                     <button class="action-btn btn-load-all" onclick="selectAllAssignments()">
                         <span>✓</span>
                         <span>Select All</span>
@@ -1476,6 +1904,10 @@
                             <input type="checkbox" id="exportIncludeSurveys">
                             <span>Include the civic engagement pre-survey and post-survey</span>
                         </label>
+                        <label class="export-toggle">
+                            <input type="checkbox" id="exportTitlePoints" checked>
+                            <span>Show point values in assignment titles &mdash; e.g. &ldquo;Texas Myth Busting Video (20 Points)&rdquo;</span>
+                        </label>
                     </div>
                     <div class="canvas-export-field">
                         <label for="exportCourseTitle">Package title (shown in Canvas):</label>
@@ -1489,7 +1921,9 @@
                     <div class="canvas-export-status" id="canvasExportStatus"></div>
                     <p class="canvas-export-note">
                         Assignments are created as Complete/Incomplete, each with its full rubric in the
-                        description. <strong>Test the import in a Canvas sandbox course before relying on
+                        description. Point values appear in the title and description only &mdash; every
+                        activity imports at 0 gradebook points, so TIA activities never affect the Canvas
+                        grade on their own. <strong>Test the import in a Canvas sandbox course before relying on
                         it</strong> &mdash; Canvas import behavior can vary by institution.
                     </p>
                 </div>
@@ -1546,6 +1980,22 @@
                     <label><input type="checkbox" checked onchange="toggleCategory('quick', this.checked)"> <span class="cat-swatch" style="background:#3a6a9e;"></span> Quick Engagement</label>
                     <label id="customToggleLabel" style="display:none;"><input type="checkbox" checked onchange="toggleCategory('custom', this.checked)"> <span class="cat-swatch" style="background:#455A64;"></span> Custom</label>
                     <span style="margin-left:auto; font-size:0.85em; color:#666; font-style:italic;">💡 Click a student's name to highlight their row</span>
+                </div>
+
+                <!-- Assignment column search -->
+                <div class="tracker-search-bar">
+                    <input type="search" id="trackerSearch" class="tsearch-input"
+                           placeholder="🔎 Find an assignment column — try &ldquo;Water&rdquo;, &ldquo;Higher&rdquo;, &ldquo;25 pts&rdquo;, &ldquo;10/3&rdquo;…"
+                           oninput="filterTrackerColumns(this.value)"
+                           onkeydown="trackerSearchKey(event)"
+                           aria-label="Search assignment columns">
+                    <span id="trackerSearchCount" class="tsearch-count" aria-live="polite"></span>
+                    <label class="tsearch-hide">
+                        <input type="checkbox" id="trackerHideNonMatch"
+                               onchange="filterTrackerColumns(document.getElementById('trackerSearch').value)">
+                        Hide non-matches
+                    </label>
+                    <span class="tsearch-hint">Matching columns highlight in place and scroll into view. Searches name, tier, points, and due date. Press <strong>Enter</strong> to jump to the next match, <strong>Esc</strong> to clear.</span>
                 </div>
                 
                 <!-- The table is ALWAYS visible, showing the selected assignments -->
@@ -2924,12 +3374,109 @@
         let customAssignments = {};
         let customCounter = 0;
         
+        // ---- Due dates ----
+        // One optional date per assignment plus a single shared due time.
+        // Persisted separately from the tracker so dates survive reloads even
+        // before "Generate Tracker" is ever clicked.
+        const DUE_KEY = 'tiaTrackerDueDates';
+        let dueDates = {};      // { assignmentId: 'YYYY-MM-DD' }
+        let dueTime = '23:59';  // HH:MM (local) applied to every dated assignment
+        
+        function saveDueDates() {
+            try { localStorage.setItem(DUE_KEY, JSON.stringify({ dates: dueDates, time: dueTime })); } catch (e) {}
+        }
+        function loadDueDates() {
+            try {
+                const raw = localStorage.getItem(DUE_KEY);
+                if (raw) {
+                    const d = JSON.parse(raw);
+                    if (d && d.dates) dueDates = d.dates;
+                    if (d && d.time) dueTime = d.time;
+                }
+            } catch (e) {}
+        }
+        function syncDueDateInputs() {
+            Object.keys(completeAssignmentDatabase).forEach(id => {
+                const di = document.getElementById(`date-${id}`);
+                if (di) di.value = dueDates[id] || '';
+            });
+            const bdt = document.getElementById('bulkDueTime');
+            if (bdt) bdt.value = dueTime;
+            const dd = document.getElementById('dueDetails');
+            if (dd && Object.keys(dueDates).length > 0) dd.open = true;
+        }
+        function onDueDateChanged(e) {
+            const id = e.target.id.replace(/^date-/, '');
+            if (e.target.value) dueDates[id] = e.target.value;
+            else delete dueDates[id];
+            saveDueDates();
+            updateSummary();
+        }
+        function onDueTimeChanged() {
+            const t = document.getElementById('bulkDueTime');
+            if (t && t.value) { dueTime = t.value; saveDueDates(); }
+        }
+        function applyBulkDueDate() {
+            const dateEl = document.getElementById('bulkDueDate');
+            const date = dateEl ? dateEl.value : '';
+            if (!date) { alert('Pick a date first.'); return; }
+            onDueTimeChanged();
+            const scope = document.getElementById('bulkDueScope').value;
+            let applied = 0;
+            Object.keys(completeAssignmentDatabase).forEach(id => {
+                const checkbox = document.getElementById(`check-${id}`);
+                if (!checkbox || !checkbox.checked) return;
+                if (scope !== 'all' && completeAssignmentDatabase[id].category !== scope) return;
+                dueDates[id] = date;
+                const di = document.getElementById(`date-${id}`);
+                if (di) di.value = date;
+                applied++;
+            });
+            if (applied === 0) {
+                alert(scope === 'all'
+                    ? 'No assignments are selected yet — check the boxes first, then apply.'
+                    : `No selected assignments in the "${scope}" tier — check some boxes there first.`);
+                return;
+            }
+            saveDueDates();
+            updateSummary();
+        }
+        function clearDueDates() {
+            const dated = Object.keys(dueDates).length;
+            if (dated === 0) return;
+            if (!confirm(`Clear all ${dated} due dates?`)) return;
+            dueDates = {};
+            Object.keys(completeAssignmentDatabase).forEach(id => {
+                const di = document.getElementById(`date-${id}`);
+                if (di) di.value = '';
+            });
+            saveDueDates();
+            updateSummary();
+        }
+        // "2026-09-15" -> "9/15" for compact display in tracker headers
+        function fmtDueShort(dateStr) {
+            if (!dateStr) return '';
+            const p = String(dateStr).split('-').map(Number);
+            if (p.length !== 3 || p.some(isNaN)) return dateStr;
+            return p[1] + '/' + p[2];
+        }
+        
         // Initialize on page load
         window.addEventListener('DOMContentLoaded', function() {
             console.log('Initializing TIA Tracker...');
             loadCustomAssignments();
+            loadDueDates();
             buildAssignmentSections();
             loadSavedConfiguration();
+            
+            // Seed due dates from a saved config (e.g., a tracker restored on a
+            // new device via JSON import) when none are stored locally yet
+            if (Object.keys(dueDates).length === 0 && activeConfig.assignments.some(a => a.dueDate)) {
+                activeConfig.assignments.forEach(a => { if (a.dueDate) dueDates[a.id] = a.dueDate; });
+                if (activeConfig.dueTime) dueTime = activeConfig.dueTime;
+                saveDueDates();
+            }
+            syncDueDateInputs();
             
             // AUTO-RESUME: If we have a saved config with assignments, skip setup
             if (activeConfig.assignments.length > 0) {
@@ -3010,6 +3557,32 @@
                 });
         }
         
+        // ---- Tracker column order ----
+        // Columns are grouped by tier so every Higher Effort column sits in one
+        // block, then Medium Effort, then Quick Engagement, then Custom. Within
+        // a tier: highest points first, then alphabetical. Without this the
+        // tracker used raw database insertion order, which scattered each tier
+        // into several separate runs (the safety-focused activities were added
+        // to the database later, so they landed in their own colored clump).
+        const TIER_ORDER = {
+            'Higher Effort': 0,
+            'Medium Effort': 1,
+            'Quick Engagement': 2,
+            'Custom': 3
+        };
+        
+        function sortAssignmentsByTier(list) {
+            return (list || []).slice().sort((a, b) => {
+                const ta = TIER_ORDER[a.category] !== undefined ? TIER_ORDER[a.category] : 4;
+                const tb = TIER_ORDER[b.category] !== undefined ? TIER_ORDER[b.category] : 4;
+                if (ta !== tb) return ta - tb;
+                const pa = a.points || 0;
+                const pb = b.points || 0;
+                if (pb !== pa) return pb - pa;
+                return String(a.name).localeCompare(String(b.name));
+            });
+        }
+        
         // ---- Collapsible tier sections ----
         // Each tier's collapsed/expanded state persists in localStorage so
         // reloads remember what the instructor had open. Defaults to expanded.
@@ -3042,6 +3615,34 @@
                 setTierCollapsed(sec.dataset.tierKey, collapsed);
             });
         }
+        
+        // Live filter for the assignment list. While a query is active,
+        // sections expand to reveal matches (without persisting that state);
+        // clearing the query restores each tier's saved collapse state.
+        function filterAssignments(query) {
+            const q = (query || '').trim().toLowerCase();
+            const collapsedState = getCollapsedTiers();
+            document.querySelectorAll('.category-section[data-tier-key]').forEach(sec => {
+                let visible = 0;
+                sec.querySelectorAll('.assignment-item').forEach(item => {
+                    const label = item.querySelector('.assignment-label');
+                    const match = !q || (label && label.textContent.toLowerCase().includes(q));
+                    item.style.display = match ? '' : 'none';
+                    if (match) visible++;
+                });
+                const form = sec.querySelector('.custom-add-form');
+                if (form) form.style.display = q ? 'none' : '';
+                if (q) {
+                    sec.classList.remove('collapsed');
+                    sec.style.display = visible ? '' : 'none';
+                } else {
+                    sec.style.display = '';
+                    sec.classList.toggle('collapsed', !!collapsedState[sec.dataset.tierKey]);
+                }
+                const header = sec.querySelector('.category-header');
+                if (header) header.setAttribute('aria-expanded', String(!sec.classList.contains('collapsed')));
+            });
+        }
 
         // Helper: build one tier section with a clickable, accessible header.
         function buildTierSection(tierKey, sectionClass, emoji, label, hint) {
@@ -3068,6 +3669,24 @@
                     toggleTier(header);
                 }
             });
+            // Per-tier select buttons (don't toggle the collapse when clicked)
+            const tierBtns = document.createElement('span');
+            tierBtns.className = 'tier-select-btns';
+            const mkTierBtn = (txt, checked) => {
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.textContent = txt;
+                b.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    section.querySelectorAll('.assignment-checkbox').forEach(cb => { cb.checked = checked; });
+                    updateSummary();
+                });
+                b.addEventListener('keydown', function (e) { e.stopPropagation(); });
+                return b;
+            };
+            tierBtns.appendChild(mkTierBtn('Select all', true));
+            tierBtns.appendChild(mkTierBtn('None', false));
+            header.appendChild(tierBtns);
             section.appendChild(header);
 
             const content = document.createElement('div');
@@ -3085,7 +3704,7 @@
             const higher = buildTierSection(
                 'higher', 'category-high', '\uD83D\uDD34',
                 'Higher Effort Activities',
-                '20-30 points &middot; 14 Assignments');
+                '20-30 points &middot; ' + sortedIdsForCategory('Higher Effort').length + ' Assignments');
             sortedIdsForCategory('Higher Effort').forEach(id => {
                 higher.content.appendChild(createAssignmentItem(id, completeAssignmentDatabase[id]));
             });
@@ -3095,7 +3714,7 @@
             const medium = buildTierSection(
                 'medium', 'category-medium', '\uD83D\uDFE1',
                 'Medium Effort Activities',
-                '10-15 points &middot; 14 Assignments');
+                '10-15 points &middot; ' + sortedIdsForCategory('Medium Effort').length + ' Assignments');
             sortedIdsForCategory('Medium Effort').forEach(id => {
                 medium.content.appendChild(createAssignmentItem(id, completeAssignmentDatabase[id]));
             });
@@ -3105,7 +3724,7 @@
             const quick = buildTierSection(
                 'quick', 'category-quick', '\uD83D\uDFE2',
                 'Quick Engagement Activities',
-                '5-8 points &middot; 11 Assignments');
+                '5-8 points &middot; ' + sortedIdsForCategory('Quick Engagement').length + ' Assignments');
             sortedIdsForCategory('Quick Engagement').forEach(id => {
                 quick.content.appendChild(createAssignmentItem(id, completeAssignmentDatabase[id]));
             });
@@ -3167,6 +3786,15 @@
             const pointsSpan = document.createElement('span');
             pointsSpan.textContent = 'points';
             
+            const dateInput = document.createElement('input');
+            dateInput.type = 'date';
+            dateInput.className = 'date-input';
+            dateInput.id = `date-${id}`;
+            dateInput.title = 'Due date (optional — exports to Canvas)';
+            dateInput.disabled = true;
+            dateInput.value = dueDates[id] || '';
+            dateInput.onchange = onDueDateChanged;
+            
             const viewBtn = document.createElement('button');
             viewBtn.className = 'view-details-btn';
             viewBtn.textContent = 'View Details';
@@ -3176,6 +3804,7 @@
             item.appendChild(label);
             item.appendChild(pointsInput);
             item.appendChild(pointsSpan);
+            item.appendChild(dateInput);
             item.appendChild(viewBtn);
             
             // Add remove button for custom assignments
@@ -3353,7 +3982,14 @@
                     }
                     
                     // MIGRATION: Convert old positional arrays to keyed objects
+                    // (must run BEFORE any re-ordering — the old array format
+                    // is positional and depends on the saved column order)
                     migrateCompletedData();
+                    
+                    // Regroup existing trackers by tier. Completions are keyed
+                    // by assignment ID, so reordering columns never moves a
+                    // student's checkmarks.
+                    activeConfig.assignments = sortAssignmentsByTier(activeConfig.assignments);
                 } catch (e) {
                     console.error('Error loading saved data:', e);
                 }
@@ -3388,23 +4024,51 @@
         function updateSummary() {
             let selected = 0;
             let total = 0;
+            let dated = 0;
             
             Object.keys(completeAssignmentDatabase).forEach(id => {
                 const checkbox = document.getElementById(`check-${id}`);
                 const pointsInput = document.getElementById(`points-${id}`);
+                const dateInput = document.getElementById(`date-${id}`);
                 
                 if (checkbox && checkbox.checked) {
                     selected++;
                     total += parseInt(pointsInput.value) || 0;
                     pointsInput.disabled = false;
-                } else if (pointsInput) {
-                    pointsInput.disabled = true;
+                    if (dateInput) {
+                        dateInput.disabled = false;
+                        if (dateInput.value) dated++;
+                    }
+                } else {
+                    if (pointsInput) pointsInput.disabled = true;
+                    if (dateInput) dateInput.disabled = true;
                 }
             });
             
             document.getElementById('selectedCount').textContent = selected;
             document.getElementById('totalPoints').textContent = total;
             document.getElementById('totalAvailable').textContent = Object.keys(completeAssignmentDatabase).length;
+            const datedStat = document.getElementById('datedCount');
+            if (datedStat) datedStat.textContent = selected ? `${dated} of ${selected}` : '0';
+            
+            // Warn when completion is mathematically impossible
+            const target = parseInt(document.getElementById('targetPoints').value) || 100;
+            const below = selected > 0 && total < target;
+            const warn = document.getElementById('targetWarning');
+            if (warn) {
+                warn.style.display = below ? 'block' : 'none';
+                if (below) warn.textContent = `⚠ Total possible points (${total}) are below the target (${target}) — students could not reach completion. Select more assignments or lower the target.`;
+            }
+            
+            // Sticky mini summary
+            const ms = document.getElementById('miniSelected');
+            if (ms) {
+                ms.textContent = selected;
+                document.getElementById('miniPoints').textContent = total;
+                document.getElementById('miniTarget').textContent = target;
+                document.getElementById('miniDated').innerHTML = dated ? `Due dates: <b>${dated}</b>` : '';
+                document.getElementById('miniWarn').style.display = below ? 'inline' : 'none';
+            }
         }
         
         function selectAllAssignments() {
@@ -3427,6 +4091,7 @@
             // Collect selected assignments
             activeConfig.assignments = [];
             activeConfig.targetPoints = parseInt(document.getElementById('targetPoints').value) || 100;
+            activeConfig.dueTime = dueTime;
             
             Object.keys(completeAssignmentDatabase).forEach(id => {
                 const checkbox = document.getElementById(`check-${id}`);
@@ -3438,7 +4103,8 @@
                         id: id,
                         name: assignment.name,
                         category: assignment.category,
-                        points: parseInt(pointsInput.value) || 0
+                        points: parseInt(pointsInput.value) || 0,
+                        dueDate: dueDates[id] || null
                     });
                 }
             });
@@ -3447,6 +4113,9 @@
                 alert('Please select at least one assignment!');
                 return;
             }
+            
+            // Group the columns by tier before the tracker is built
+            activeConfig.assignments = sortAssignmentsByTier(activeConfig.assignments);
             
             // Show/hide custom legend
             const hasCustom = activeConfig.assignments.some(a => a.category === 'Custom');
@@ -3511,6 +4180,134 @@
         function getGroupName(name) {
             return name.replace(/\s*#\d+$/, '');
         }
+
+        // ── Tracker column search ──────────────────────────────────────────
+        // Highlights assignment COLUMNS whose name / tier / points / due date
+        // match the query, scrolls the first match into view, and (optionally)
+        // hides the rest. It works purely by column position: the header row and
+        // every student row share the layout
+        //   [ Student Name, ...assignments, Total, Categories, Notes, Actions ]
+        // so assignment i is always child (i + 1) in each row. That means the
+        // search needs no changes to how cells are built and survives re-renders.
+        let trackerMatchCols = [];   // header <th> elements for the current matches
+        let trackerMatchPos = 0;     // index within trackerMatchCols Enter last hit
+
+        function assignmentSearchText(a) {
+            let s = (a.name || '') + ' ' + (a.category || '') + ' ' + a.points + ' pts';
+            if (a.dueDate) s += ' due ' + fmtDueShort(a.dueDate);
+            return s.toLowerCase();
+        }
+
+        function filterTrackerColumns(query, opts) {
+            opts = opts || {};
+            const doScroll = opts.scroll !== false;   // default: scroll to first match
+            const keepPos  = !!opts.keepPos;          // preserve Enter position on re-render
+            const q = (query || '').trim().toLowerCase();
+            const hideEl = document.getElementById('trackerHideNonMatch');
+            const hide = !!(hideEl && hideEl.checked);
+            const headerRow = document.querySelector('#tableHeader tr');
+            const N = activeConfig.assignments.length;
+
+            // Which assignment indices match the query?
+            const matchIdx = [];
+            if (q) {
+                activeConfig.assignments.forEach((a, i) => {
+                    if (assignmentSearchText(a).includes(q)) matchIdx.push(i);
+                });
+            }
+            const matchSet = new Set(matchIdx);
+
+            // Walk the header row + every body row, tagging cells by column index.
+            const rows = [];
+            if (headerRow) rows.push(headerRow);
+            document.querySelectorAll('#tableBody tr').forEach(r => rows.push(r));
+            rows.forEach(row => {
+                for (let i = 0; i < N; i++) {
+                    const cell = row.children[i + 1];      // +1 skips the Student Name column
+                    if (!cell) continue;                    // placeholder / short rows
+                    cell.classList.remove('col-match', 'col-dim', 'col-hidden', 'col-current');
+                    if (!q) continue;                       // cleared → everything back to normal
+                    if (matchSet.has(i)) cell.classList.add('col-match');
+                    else cell.classList.add(hide ? 'col-hidden' : 'col-dim');
+                }
+            });
+
+            // Remember the matching header cells for Enter-cycling and scrolling.
+            trackerMatchCols = headerRow
+                ? matchIdx.map(i => headerRow.children[i + 1]).filter(Boolean)
+                : [];
+            if (!keepPos) trackerMatchPos = 0;
+            if (trackerMatchPos >= trackerMatchCols.length) trackerMatchPos = 0;
+
+            // Live match counter.
+            const counter = document.getElementById('trackerSearchCount');
+            if (counter) {
+                if (!q) {
+                    counter.textContent = '';
+                    counter.classList.remove('none');
+                } else {
+                    const n = matchIdx.length;
+                    counter.textContent = n ? (n + (n === 1 ? ' match' : ' matches')) : 'no matches';
+                    counter.classList.toggle('none', n === 0);
+                }
+            }
+
+            // Mark / reveal the current match.
+            if (q && trackerMatchCols.length) {
+                if (doScroll) {
+                    scrollToMatch(trackerMatchPos);
+                } else {
+                    trackerMatchCols.forEach(th => th.classList.remove('col-current'));
+                    const cur = trackerMatchCols[trackerMatchPos];
+                    if (cur) cur.classList.add('col-current');
+                }
+            }
+        }
+
+        // Move the "current" highlight to a match and scroll it into view,
+        // skipping any column currently hidden by a category toggle.
+        function scrollToMatch(pos) {
+            if (!trackerMatchCols.length) return;
+            const len = trackerMatchCols.length;
+            pos = ((pos % len) + len) % len;                // wrap around
+            let tries = 0;
+            while (trackerMatchCols[pos].offsetParent === null && tries < len) {
+                pos = (pos + 1) % len;
+                tries++;
+            }
+            trackerMatchPos = pos;
+            trackerMatchCols.forEach(th => th.classList.remove('col-current'));
+            const th = trackerMatchCols[pos];
+            th.classList.add('col-current');
+            th.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+        }
+
+        function trackerSearchKey(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (trackerMatchCols.length) scrollToMatch(trackerMatchPos + 1);
+            } else if (e.key === 'Escape') {
+                e.preventDefault();
+                clearTrackerSearch();
+            }
+        }
+
+        function clearTrackerSearch() {
+            const input = document.getElementById('trackerSearch');
+            if (input) input.value = '';
+            filterTrackerColumns('');
+            if (input) input.blur();
+        }
+
+        // Marking a completion, switching sections, or adding a student rebuilds
+        // the table and wipes the highlight classes — re-apply the active search
+        // afterward (without yanking the scroll position or resetting Enter).
+        function reapplyTrackerSearch() {
+            const input = document.getElementById('trackerSearch');
+            if (input && input.value.trim()) {
+                filterTrackerColumns(input.value, { scroll: false, keepPos: true });
+            }
+        }
         
         function renderTableHeaders() {
             // This function ALWAYS shows the assignment columns, even with no sections
@@ -3531,14 +4328,19 @@
             
             // Assignment columns - colored by CATEGORY
             let prevGroup = null;
+            let prevCat = null;
             activeConfig.assignments.forEach((assignment) => {
                 const th = document.createElement('th');
                 th.className = getCatClass(assignment.category);
                 const group = getGroupName(assignment.name);
-                if (prevGroup !== null && group !== prevGroup) {
+                if (prevCat !== null && assignment.category !== prevCat) {
+                    th.classList.add('tier-boundary');
+                } else if (prevGroup !== null && group !== prevGroup) {
                     th.classList.add('cat-boundary');
                 }
-                th.innerHTML = `${assignment.name}<br>(${assignment.points} pts)`;
+                prevCat = assignment.category;
+                th.innerHTML = `${assignment.name}<br>(${assignment.points} pts)` +
+                    (assignment.dueDate ? `<br><span class="th-due">due ${fmtDueShort(assignment.dueDate)}</span>` : '');
                 headerRow.appendChild(th);
                 prevGroup = group;
             });
@@ -3578,10 +4380,11 @@
                 placeholderRow.appendChild(placeholderCell);
                 body.appendChild(placeholderRow);
             }
+            reapplyTrackerSearch();
         }
         
         function addSection() {
-            const name = prompt('Enter section name (e.g., "Period 1", "GOVT 2305-001"):');
+            const name = prompt('Enter section name (e.g., "Period 1", "GOVT 2306-001"):');
             if (name && name.trim()) {
                 if (trackerSections[name]) {
                     alert('Section already exists!');
@@ -3666,8 +4469,11 @@
             
             // Precompute which columns are assignment-group boundaries
             const boundarySet = new Set();
+            const tierBoundarySet = new Set();
             for (let i = 1; i < activeConfig.assignments.length; i++) {
-                if (getGroupName(activeConfig.assignments[i].name) !== getGroupName(activeConfig.assignments[i-1].name)) {
+                if (activeConfig.assignments[i].category !== activeConfig.assignments[i-1].category) {
+                    tierBoundarySet.add(i);
+                } else if (getGroupName(activeConfig.assignments[i].name) !== getGroupName(activeConfig.assignments[i-1].name)) {
                     boundarySet.add(i);
                 }
             }
@@ -3676,8 +4482,10 @@
             activeConfig.assignments.forEach((assignment, i) => {
                 const th = document.createElement('th');
                 th.className = getCatClass(assignment.category);
-                if (boundarySet.has(i)) th.classList.add('cat-boundary');
-                th.innerHTML = `${assignment.name}<br>(${assignment.points} pts)`;
+                if (tierBoundarySet.has(i)) th.classList.add('tier-boundary');
+                else if (boundarySet.has(i)) th.classList.add('cat-boundary');
+                th.innerHTML = `${assignment.name}<br>(${assignment.points} pts)` +
+                    (assignment.dueDate ? `<br><span class="th-due">due ${fmtDueShort(assignment.dueDate)}</span>` : '');
                 headerRow.appendChild(th);
             });
             
@@ -3708,7 +4516,8 @@
                         
                         const completed = student.completed[assignment.id] || false;
                         cell.className = `${catCls} activity-cell${completed ? ' is-done' : ''}`;
-                        if (boundarySet.has(aIdx)) cell.classList.add('cat-boundary');
+                        if (tierBoundarySet.has(aIdx)) cell.classList.add('tier-boundary');
+                        else if (boundarySet.has(aIdx)) cell.classList.add('cat-boundary');
                         cell.innerHTML = `<span class="${completed ? 'completed' : 'not-completed'}">${completed ? '✓' : '○'}</span>`;
                         cell.onclick = () => toggleActivity(sIdx, assignment.id);
                         
@@ -3763,6 +4572,7 @@
                     body.appendChild(row);
                 });
             }
+            reapplyTrackerSearch();
         }
         
         function toggleActivity(studentIdx, assignmentId) {
@@ -4003,7 +4813,9 @@
                 version: '4.0',
                 config: activeConfig,
                 sections: trackerSections,
-                customAssignments: customAssignments
+                customAssignments: customAssignments,
+                dueDates: dueDates,
+                dueTime: dueTime
             };
             
             const blob = new Blob([JSON.stringify(saveData, null, 2)], {type: 'application/json'});
@@ -4039,6 +4851,17 @@
                             }
                         });
                         saveCustomAssignments();
+                    }
+                    
+                    // Import due dates (fill in any this browser doesn't have)
+                    if (importedData.dueDates) {
+                        Object.keys(importedData.dueDates).forEach(id => {
+                            if (!dueDates[id]) dueDates[id] = importedData.dueDates[id];
+                        });
+                        if (importedData.dueTime && dueTime === '23:59') dueTime = importedData.dueTime;
+                        saveDueDates();
+                        syncDueDateInputs();
+                        updateSummary();
                     }
                     
                     // Merge configuration - use imported if current is empty
@@ -4144,6 +4967,10 @@
                         });
                     });
                     
+                    // Regroup by tier last — the legacy array conversions above
+                    // rely on the original saved column order.
+                    activeConfig.assignments = sortAssignmentsByTier(activeConfig.assignments);
+                    
                     saveConfiguration();
                     renderSectionTabs();
                     if (currentSection) {
@@ -4224,6 +5051,7 @@
         function gbNormalizeName(raw) {
             return String(raw == null ? '' : raw)
                 .replace(/\(\d+\)\s*$/, '')          // strip "(12345)" id suffix
+                .replace(/\(\s*\d+\s*(?:points?|pts?)\b[^)]*\)\s*$/i, '')  // strip "(25 Points)" title suffix
                 .toLowerCase()
                 .replace(/[^a-z0-9 ]+/g, ' ')        // punctuation -> space
                 .replace(/\s+/g, ' ')
@@ -4495,12 +5323,29 @@
                 .replace(/^-+|-+$/g, '') || 'assignment';
         }
 
+        // Convert a local date (YYYY-MM-DD) + time (HH:MM) into the UTC ISO
+        // string Canvas expects in <due_at>. Canvas reads due_at as UTC, so
+        // "Sept 15 at 11:59 PM Central" must be written as 2026-09-16T04:59:00Z.
+        // Building the Date from local parts and calling toISOString() handles
+        // the instructor's timezone AND daylight saving automatically.
+        function capDueAtIso(dateStr, timeStr) {
+            if (!dateStr) return null;
+            const dp = String(dateStr).split('-').map(Number);
+            if (dp.length !== 3 || dp.some(isNaN)) return null;
+            let hh = 23, mm = 59;
+            const tm = /^(\d{1,2}):(\d{2})/.exec(String(timeStr || ''));
+            if (tm) { hh = parseInt(tm[1], 10); mm = parseInt(tm[2], 10); }
+            const local = new Date(dp[0], dp[1] - 1, dp[2], hh, mm, 0);
+            if (isNaN(local.getTime())) return null;
+            return local.toISOString().replace(/\.\d{3}Z$/, 'Z');
+        }
+
         // Build the assignment_settings.xml (Canvas cccv1p0 schema, pass_fail).
-        function capAssignmentSettingsXml(resId, title) {
+        function capAssignmentSettingsXml(resId, title, dueAtIso) {
             return '<?xml version="1.0" encoding="UTF-8"?>\n' +
 '<assignment identifier="' + resId + '" xmlns="http://canvas.instructure.com/xsd/cccv1p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://canvas.instructure.com/xsd/cccv1p0 https://canvas.instructure.com/xsd/cccv1p0.xsd">\n' +
 '  <title>' + capXmlEscape(title) + '</title>\n' +
-'  <due_at/>\n  <lock_at/>\n  <unlock_at/>\n' +
+'  ' + (dueAtIso ? '<due_at>' + dueAtIso + '</due_at>' : '<due_at/>') + '\n  <lock_at/>\n  <unlock_at/>\n' +
 '  <module_locked>false</module_locked>\n' +
 '  <assignment_group_identifierref>cap_group_main</assignment_group_identifierref>\n' +
 '  <workflow_state>published</workflow_state>\n' +
@@ -4594,7 +5439,9 @@ bodyHtml + '\n</body>\n</html>\n';
                 const pInput = document.getElementById('points-' + id);
                 const points = pInput ? (parseInt(pInput.value, 10) || all[id].defaultPoints || 0)
                                       : (all[id].defaultPoints || 0);
-                const entry = { id: id, data: all[id], points: points };
+                const dInput = document.getElementById('date-' + id);
+                const entry = { id: id, data: all[id], points: points,
+                                dueDate: (dInput && dInput.value) || null };
                 const cat = all[id].category;
                 if (tiers[cat]) tiers[cat].push(entry);
                 else other.push(entry);
@@ -4671,6 +5518,10 @@ bodyHtml + '\n</body>\n</html>\n';
                                 || 'Texas In Action (TIA)';
             const includeCheckpoints = document.getElementById('exportIncludeCheckpoints').checked;
             const includeSurveys = document.getElementById('exportIncludeSurveys').checked;
+            const tpEl = document.getElementById('exportTitlePoints');
+            const includeTitlePoints = tpEl ? tpEl.checked : true;
+            const bdtEl = document.getElementById('bulkDueTime');
+            const exportDueTime = (bdtEl && bdtEl.value) || dueTime || '23:59';
 
             capSetStatus('ok', 'Building your Canvas package&hellip;');
 
@@ -4691,12 +5542,16 @@ bodyHtml + '\n</body>\n</html>\n';
                     const resId = capHexId('cap-assign-' + entry.id + '-' + entry.data.name);
                     const slug = capSlug(entry.data.name);
                     const htmlFile = slug + '.html';
+                    const exportTitle = includeTitlePoints
+                        ? entry.data.name + ' (' + entry.points + ' Points)'
+                        : entry.data.name;
                     zip.file(resId + '/' + htmlFile, capAssignmentHtml(entry.data, entry.points));
                     zip.file(resId + '/assignment_settings.xml',
-                             capAssignmentSettingsXml(resId, entry.data.name));
+                             capAssignmentSettingsXml(resId, exportTitle,
+                                 capDueAtIso(entry.dueDate, exportDueTime)));
                     resources.push({ resId: resId, htmlFile: htmlFile, isAssignment: true });
                     sectionItems.push({ itemId: capHexId('item-' + resId),
-                                        resId: resId, title: entry.data.name });
+                                        resId: resId, title: exportTitle });
                 }
 
                 tierOrder.forEach(function (t) {
@@ -4848,6 +5703,14 @@ org +
                 let extraNote = '';
                 if (includeCheckpoints) extraNote += ' Includes 3 checkpoint assignments.';
                 if (includeSurveys) extraNote += ' Includes 2 survey assignments.';
+                const allSelEntries = tiers['Higher Effort'].concat(tiers['Medium Effort'], tiers['Quick Engagement'], other);
+                const datedCount = allSelEntries.filter(function (e) { return e.dueDate; }).length;
+                if (allSelEntries.length > 0) {
+                    extraNote += datedCount > 0
+                        ? ' Due dates: ' + datedCount + ' of ' + allSelEntries.length +
+                          ' assignments carry one, at ' + capXmlEscape(exportDueTime) + ' local time.'
+                        : ' No due dates set &mdash; add them in the \uD83D\uDCC5 bar above the assignment list if you want Canvas deadlines.';
+                }
                 capSetStatus('ok',
                     '<strong>Package created.</strong> ' + allItems.length +
                     ' assignment' + (allItems.length === 1 ? '' : 's') +
