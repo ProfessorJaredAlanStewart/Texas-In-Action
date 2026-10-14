@@ -2117,7 +2117,7 @@
                         <p>Click the button below and pick the gradebook file Canvas just gave you.
                         This tracker reads it, fills in <em>complete</em> / <em>incomplete</em> for
                         each TIA assignment, and immediately downloads a <strong>new</strong> file
-                        named <code>CAP_Gradebook_Filled_&hellip;.csv</code>.</p>
+                        named <code>TIA_Gradebook_Filled_&hellip;.csv</code>.</p>
                         <p class="gb-note">Your browser may ask where to save it, or simply drop
                         it in Downloads &mdash; that downloaded file is the one you want next.</p>
                     </div>
@@ -2128,7 +2128,7 @@
                     <div class="gb-step-body">
                         <h4>Back in Canvas: import the filled file</h4>
                         <p>In Canvas Grades, click <strong>Import</strong>, upload the
-                        <code>CAP_Gradebook_Filled_&hellip;.csv</code> file, and
+                        <code>TIA_Gradebook_Filled_&hellip;.csv</code> file, and
                         <strong>review the preview Canvas shows you before saving</strong>.</p>
                     </div>
                 </div>
@@ -4753,7 +4753,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `CAP_Tracker_${currentSection}_${new Date().toISOString().split('T')[0]}.csv`;
+            a.download = `TIA_Tracker_${currentSection}_${new Date().toISOString().split('T')[0]}.csv`;
             a.click();
             URL.revokeObjectURL(url);
         }
@@ -4822,7 +4822,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `CAP_Tracker_Save_${new Date().toISOString().split('T')[0]}.json`;
+            a.download = `TIA_Tracker_Save_${new Date().toISOString().split('T')[0]}.json`;
             a.click();
             URL.revokeObjectURL(url);
         }
@@ -5032,7 +5032,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `CAP_Student_Summary_${new Date().toISOString().split('T')[0]}.csv`;
+            a.download = `TIA_Student_Summary_${new Date().toISOString().split('T')[0]}.csv`;
             a.click();
             URL.revokeObjectURL(url);
         }
@@ -5230,7 +5230,7 @@
                         String(now.getMinutes()).padStart(2, '0');
                     const sectionTag = (currentSection || 'Section')
                         .replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-                    a.download = 'CAP_Gradebook_Filled_' + sectionTag + '_' + stamp + '.csv';
+                    a.download = 'TIA_Gradebook_Filled_' + sectionTag + '_' + stamp + '.csv';
                     a.click();
                     URL.revokeObjectURL(url);
 
